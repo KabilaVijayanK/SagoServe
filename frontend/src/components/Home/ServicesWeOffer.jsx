@@ -45,17 +45,17 @@ export default function ServicesWeOffer() {
   const sectionRef = useRef(null);
 
   useEffect(() => {
-    const items = sectionRef.current.querySelectorAll(".animate-item");
+    const items = sectionRef.current.querySelectorAll(".reveal");
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("opacity-100", "translate-y-0");
+            entry.target.classList.add("show");
           }
         });
       },
-      { threshold: 0.2 }
+      { threshold: 0.25 }
     );
 
     items.forEach((el) => observer.observe(el));
@@ -65,41 +65,65 @@ export default function ServicesWeOffer() {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-white pt-24 pb-28 overflow-hidden"
+      className="relative py-32 overflow-hidden"
     >
-      {/* LEFT IMAGE */}
-      <div
-        className="absolute left-0 top-0 h-full w-[40%] bg-cover bg-center hidden lg:block"
-        style={{ backgroundImage: "url('/hero1.jpg')" }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-white" />
+      {/* 🌿 BACKGROUND */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-white to-emerald-100 animate-gradientSlow" />
+
+        {/* floating shapes */}
+        <div className="absolute -top-24 -left-24 w-96 h-96 bg-green-300/20 rounded-full blur-3xl animate-floatSlow" />
+        <div className="absolute bottom-0 right-0 w-80 h-80 bg-emerald-400/20 rounded-full blur-3xl animate-floatSlow delay-500" />
+      </div>
 
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
-        <h2 className="text-4xl md:text-5xl font-bold text-green-500 mb-16">
+        <h2 className="text-4xl md:text-5xl font-bold text-green-600 mb-20 reveal">
           Services We Offer
         </h2>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-14">
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
               <div
                 key={service.title}
-                className="animate-item opacity-0 translate-y-12 transition-all duration-700 ease-out"
+                className="reveal"
                 style={{ transitionDelay: `${index * 120}ms` }}
               >
-                <div className="flex gap-5 items-start">
-                  <div className="h-14 w-14 rounded-xl bg-green-100 flex items-center justify-center">
-                    <Icon className="text-green-600" size={28} />
-                  </div>
+                <div
+                  className="
+                    group p-7 rounded-2xl
+                    bg-white/65 backdrop-blur-xl
+                    border border-white/40
+                    shadow-lg
+                    hover:shadow-2xl hover:-translate-y-2
+                    transition-all duration-500
+                  "
+                >
+                  <div className="flex gap-5 items-start">
+                    <div
+                      className="
+                        h-14 w-14 rounded-xl
+                        bg-green-100
+                        flex items-center justify-center
+                        group-hover:bg-green-600
+                        transition-colors duration-300
+                      "
+                    >
+                      <Icon
+                        size={28}
+                        className="text-green-600 group-hover:text-white transition-colors"
+                      />
+                    </div>
 
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900">
-                      {service.title}
-                    </h3>
-                    <p className="mt-2 text-gray-600 leading-relaxed">
-                      {service.desc}
-                    </p>
+                    <div>
+                      <h3 className="text-xl font-semibold text-gray-900">
+                        {service.title}
+                      </h3>
+                      <p className="mt-2 text-gray-600 leading-relaxed text-sm">
+                        {service.desc}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>

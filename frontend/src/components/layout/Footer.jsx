@@ -36,12 +36,13 @@ const Footer = () => {
 
   return (
     <footer
-      ref={footerRef}
-      className={`bg-gradient-to-b from-slate-900 to-slate-950 text-slate-300 mt-24
-        transition-all duration-700 ease-out
-        ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"}
-      `}
-    >
+  ref={footerRef}
+  className={`bg-gradient-to-b from-slate-900 to-slate-950 text-slate-300
+    transition-all duration-700 ease-out
+    ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"}
+  `}
+>
+
       {/* Top */}
       <div className="max-w-7xl mx-auto px-6 py-16 grid gap-12 md:grid-cols-2 lg:grid-cols-4">
         

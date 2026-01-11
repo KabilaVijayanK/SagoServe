@@ -3,11 +3,14 @@ import Hero from "../components/Home/Hero";
 import ServicesWeOffer from "../components/Home/ServicesWeOffer";
 import StatsSection from "../components/Home/StatsSection";
 import ProductsShowcase from "../components/Home/ProductsShowcase";
-
+import AboutSagoSection from "../components/Home/AboutSagoSection";
 import AverageRates from "../components/Home/AverageRates";
 import QuickLinks from "../components/Home/QuickLinks";
 import LatestNews from "../components/Home/LatestNews";
 import SectionTittle from "../components/common/SectionTittle";
+import NewsEventsSection from "../components/Home/NewsEventsSection";
+import TapiocaHighlightSection from "../components/Home/TapiocaHighlightSection";
+import QuickLinksSection from "../components/Home/QuickLinksSection";
 
 const sampleNews = [
   {
@@ -32,29 +35,31 @@ export default function Home() {
   };
 
   return (
-    <div>
-      {/* HERO SECTION */}
+    <main className="overflow-x-hidden">
+      {/* HERO */}
       <Hero />
 
-      {/* 🔥 HERO KEELA SERVICES */}
+      {/* SERVICES */}
       <ServicesWeOffer />
-    <StatsSection />
-    <ProductsShowcase />
-      {/* BELOW CONTENT */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 grid gap-10 lg:grid-cols-3">
-        <div className="lg:col-span-2 space-y-10">
-          <SectionTittle title="Average Market Rates" />
-          <AverageRates rates={rates} />
 
-          <SectionTittle title="Latest News & Events" />
-          <LatestNews items={sampleNews} />
-        </div>
+      {/* HIGHLIGHT */}
+      <TapiocaHighlightSection />
 
-        <aside>
-          <SectionTittle title="Quick Links" />
-          <QuickLinks />
-        </aside>
-      </div>
-    </div>
+      {/* ABOUT */}
+      <AboutSagoSection />
+
+      {/* STATS */}
+      <StatsSection />
+
+      {/* PRODUCTS */}
+      <ProductsShowcase />
+
+      {/* NEWS + EVENTS */}
+      <NewsEventsSection />
+      <QuickLinksSection />
+
+
+      
+    </main>
   );
 }
