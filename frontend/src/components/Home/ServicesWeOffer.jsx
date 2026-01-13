@@ -41,6 +41,14 @@ const services = [
   },
 ];
 
+const marqueeTexts = [
+  "Understanding the Cooperative Framework",
+  "Transparent Marketing & Member Support",
+  "Supporting Members Across the Value Chain",
+  "Your Growth Journey",
+  "Sustainable Growth Through Cooperation",
+];
+
 export default function ServicesWeOffer() {
   const sectionRef = useRef(null);
 
@@ -50,9 +58,7 @@ export default function ServicesWeOffer() {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("show");
-          }
+          if (entry.isIntersecting) entry.target.classList.add("show");
         });
       },
       { threshold: 0.25 }
@@ -63,17 +69,12 @@ export default function ServicesWeOffer() {
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative py-32 overflow-hidden"
-    >
+    <section ref={sectionRef} className="relative py-32 overflow-hidden">
       {/* 🌿 BACKGROUND */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-white to-emerald-100 animate-gradientSlow" />
-
-        {/* floating shapes */}
-        <div className="absolute -top-24 -left-24 w-96 h-96 bg-green-300/20 rounded-full blur-3xl animate-floatSlow" />
-        <div className="absolute bottom-0 right-0 w-80 h-80 bg-emerald-400/20 rounded-full blur-3xl animate-floatSlow delay-500" />
+        <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-white to-emerald-100" />
+        <div className="absolute -top-24 -left-24 w-96 h-96 bg-green-300/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-80 h-80 bg-emerald-400/20 rounded-full blur-3xl" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
@@ -81,6 +82,7 @@ export default function ServicesWeOffer() {
           Services We Offer
         </h2>
 
+        {/* SERVICES GRID */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-14">
           {services.map((service, index) => {
             const Icon = service.icon;
@@ -90,29 +92,12 @@ export default function ServicesWeOffer() {
                 className="reveal"
                 style={{ transitionDelay: `${index * 120}ms` }}
               >
-                <div
-                  className="
-                    group p-7 rounded-2xl
-                    bg-white/65 backdrop-blur-xl
-                    border border-white/40
-                    shadow-lg
-                    hover:shadow-2xl hover:-translate-y-2
-                    transition-all duration-500
-                  "
-                >
+                <div className="group p-7 rounded-2xl bg-white/70 backdrop-blur-xl border border-white/40 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
                   <div className="flex gap-5 items-start">
-                    <div
-                      className="
-                        h-14 w-14 rounded-xl
-                        bg-green-100
-                        flex items-center justify-center
-                        group-hover:bg-green-600
-                        transition-colors duration-300
-                      "
-                    >
+                    <div className="h-14 w-14 rounded-xl bg-green-100 flex items-center justify-center group-hover:bg-green-600 transition-colors">
                       <Icon
                         size={28}
-                        className="text-green-600 group-hover:text-white transition-colors"
+                        className="text-green-600 group-hover:text-white"
                       />
                     </div>
 
@@ -130,6 +115,25 @@ export default function ServicesWeOffer() {
             );
           })}
         </div>
+
+        {/* 🔁 MOVING VALUE STRIP (BOTTOM) */}
+<div className="relative mt-28 overflow-hidden select-none">
+  {/* LEFT FADE */}
+  <div className="pointer-events-none absolute left-0 top-0 h-full w-32 bg-gradient-to-r from-transparent to-transparent z-10" />
+  {/* RIGHT FADE */}
+  <div className="pointer-events-none absolute right-0 top-0 h-full w-32 bg-gradient-to-l from-transparent to-transparent z-10" />
+
+  <div className="marquee-track">
+    {[...marqueeTexts, ...marqueeTexts].map((text, i) => (
+      <span key={i} className="marquee-item">
+        <span className="dot" />
+        {text}
+      </span>
+    ))}
+  </div>
+</div>
+
+
       </div>
     </section>
   );

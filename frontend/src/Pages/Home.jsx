@@ -11,6 +11,11 @@ import SectionTittle from "../components/common/SectionTittle";
 import NewsEventsSection from "../components/Home/NewsEventsSection";
 import TapiocaHighlightSection from "../components/Home/TapiocaHighlightSection";
 import QuickLinksSection from "../components/Home/QuickLinksSection";
+import WelcomeSection from "../components/Home/WelcomeSection";
+import HomeTestimonialsSection from "../components/Home/HomeTestimonialsSection";
+import GrowthCtaSection from "../components/Home/GrowthCtaSection";
+
+<GrowthCtaSection />
 
 const sampleNews = [
   {
@@ -38,7 +43,7 @@ export default function Home() {
     <main className="overflow-x-hidden">
       {/* HERO */}
       <Hero />
-
+       <WelcomeSection />
       {/* SERVICES */}
       <ServicesWeOffer />
 
@@ -57,7 +62,8 @@ export default function Home() {
       {/* NEWS + EVENTS */}
       <NewsEventsSection />
       <QuickLinksSection />
-
+<HomeTestimonialsSection />
+<GrowthCtaSection />
 
       
     </main>
