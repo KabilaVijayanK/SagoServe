@@ -231,3 +231,49 @@ html {
 .animate-kenburns {
   animation: kenburns 14s ease-in-out infinite;
 }
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 1.2s ease-out forwards;
+}
+
+.animate-fade-up.delay-200 {
+  animation-delay: 0.3s;
+}
+
+@keyframes growWidth {
+  from {
+    width: 0;
+  }
+  to {
+    width: 8rem;
+  }
+}
+
+.animate-width {
+  animation: growWidth 1s ease-out forwards;
+}
+
+@keyframes bounceSlow {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(10px);
+    opacity: 1;
+  }
+}
+
+.animate-bounce-slow {
+  animation: bounceSlow 2s infinite;
+}

@@ -18,64 +18,70 @@ export default function HeroRightWidget() {
   }, []);
 
   return (
-    <div className="hidden lg:block absolute top-10 right-10 z-30">
-      <div className="
-  w-[280px]
-  rounded-2xl
-  bg-white/25 backdrop-blur-xl
-  p-4
-  shadow-xl
-  border border-white/30
-">
-
+    <div className="hidden lg:block absolute top-28 right-10 z-30">
+      <div
+        className="
+          w-[320px]
+          rounded-3xl
+          bg-white/25 backdrop-blur-xl
+          p-5
+          shadow-[0_20px_60px_rgba(0,0,0,0.45)]
+          border border-white/30
+        "
+      >
         {/* HEADER */}
-        <div className="flex justify-between text-xs text-white/80 mb-4">
+        <div className="flex justify-between text-xs text-white/80 mb-5">
           <span>15:56 (IST)</span>
           <span>{new Date().toDateString()}</span>
         </div>
 
         {/* INFO CARD */}
-        <div className="bg-white rounded-2xl p-4 mb-4">
-          <p className="text-xs text-gray-400">Information</p>
+        <div className="bg-white rounded-2xl p-5 mb-5">
+          <p className="text-xs text-gray-400 mb-1">Information</p>
           <p className="font-semibold text-gray-800">
             Check order status
           </p>
         </div>
 
         {/* SLIDING RATE CARD */}
-        <div className="bg-white rounded-2xl p-4 mb-4">
-        <div className="relative h-[90px] overflow-hidden mb-4">
-          {items.map((item, i) => (
-            <div
-              key={item.label}
-              className={`
-                absolute inset-0 flex flex-col justify-center items-center
-                transition-all duration-700
-                ${i === index
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-6"}
-              `}
-            >
-              <p className="text-xs text-gray-500">{item.label}</p>
-              <p className="text-xl font-bold text-gray-900">
-                <AnimatedNumber value={item.value} />
-              </p>
-              <p className="text-xs text-gray-500">/ MT</p>
-            </div>
-          ))}
+        <div className="bg-white rounded-2xl p-5 mb-5">
+          <div className="relative h-[120px] overflow-hidden">
+            {items.map((item, i) => (
+              <div
+                key={item.label}
+                className={`
+                  absolute inset-0
+                  flex flex-col justify-center items-center
+                  transition-all duration-700 ease-out
+                  ${
+                    i === index
+                      ? "opacity-100 translate-y-0"
+                      : "opacity-0 translate-y-6"
+                  }
+                `}
+              >
+                <p className="text-xs text-gray-500 mb-1">
+                  {item.label}
+                </p>
+                <p className="text-2xl font-bold text-gray-900">
+                 <AnimatedNumber value={item.value} />
+                </p>
+                <p className="text-xs text-gray-500 mt-1">/ MT</p>
+              </div>
+            ))}
           </div>
         </div>
 
         {/* ARTICLE */}
-        <div className="bg-white rounded-2xl p-3 flex gap-3 items-center">
+        <div className="bg-white rounded-2xl p-4 flex gap-4 items-center">
           <img
             src="/hero1.jpg"
             alt="news"
-            className="w-10 h-10 rounded-lg object-cover"
+            className="w-12 h-12 rounded-xl object-cover"
           />
           <div>
             <p className="text-xs text-gray-400">Article</p>
-            <p className="text-sm font-medium text-gray-800 leading-tight">
+            <p className="text-sm font-medium text-gray-800 leading-snug">
               Market demand steady this week
             </p>
           </div>
