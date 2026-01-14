@@ -103,7 +103,7 @@ export default function ProductsShowcase() {
 
                 <div className="mt-5">
                   <Button onClick={() => (window.location.href = "/products")}>
-                    View Details
+                    Purchase Now
                   </Button>
                 </div>
               </div>
