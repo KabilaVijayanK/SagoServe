@@ -323,3 +323,32 @@ html {
     transform: translateX(-50%);
   }
 }
+@keyframes cert-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes gallery-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-cert-scroll {
+  animation: cert-scroll 28s linear infinite;
+}
+
+.animate-gallery-scroll {
+  animation: gallery-scroll 40s linear infinite;
+}
+@keyframes cert-scroll-premium {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-cert-scroll-premium {
+  animation: cert-scroll-premium 40s linear infinite;
+}
