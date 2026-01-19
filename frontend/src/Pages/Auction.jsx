@@ -183,7 +183,7 @@ export default function Auction() {
         ></div>
 
         {/* Animated background gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/90 via-teal-600/85 to-cyan-600/90"></div>
+        <div className="absolute inset-0 bg-black/80"></div>
         
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden">
@@ -200,22 +200,7 @@ export default function Auction() {
              }}
         />
 
-        {/* Floating particles */}
-        <div className="absolute inset-0 overflow-hidden">
-          {[...Array(15)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-2 h-2 bg-white rounded-full animate-pulse"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                opacity: Math.random() * 0.7 + 0.3,
-                animationDelay: `${Math.random() * 3}s`,
-                animationDuration: `${2 + Math.random() * 2}s`
-              }}
-            />
-          ))}
-        </div>
+        
 
         {/* Content */}
         <div className="relative z-10 max-w-5xl mx-auto px-6 lg:px-8 text-center py-20">
