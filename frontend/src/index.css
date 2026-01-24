@@ -352,3 +352,9 @@ html {
 .animate-cert-scroll-premium {
   animation: cert-scroll-premium 40s linear infinite;
 }
+.marquee-item {
+  color: #8B5E3C;
+}
+.marquee-item .dot {
+  background-color: #5A3A22;
+}

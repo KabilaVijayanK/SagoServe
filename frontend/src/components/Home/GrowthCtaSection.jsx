@@ -19,7 +19,8 @@ export default function IdeaCtaSection() {
 </h2>
 
             <h2 className="mt-3 text-5xl md:text-7xl font-extrabold text-gray-900 leading-[1.05]">
-  START <span className="text-green-600">SAGOSERVE.</span>
+  START <span className="text-[#5A3A22]">SAGOSERVE.</span>
+
 </h2>
 
 
@@ -29,7 +30,7 @@ export default function IdeaCtaSection() {
                 href="/contact"
                 className="
                   inline-flex items-center gap-4
-                  bg-green-400 hover:bg-yellow-500
+                  bg-yellow-400 hover:bg-[#5A3A22]
                   text-black font-semibold
                   px-10 py-5 rounded-full
                   transition-all duration-300

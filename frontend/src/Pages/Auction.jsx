@@ -163,6 +163,12 @@ const PastResultsCard = () => {
 };
 
 export default function Auction() {
+  const auctionsRef = React.useRef(null);
+
+  const scrollToAuctions = () => {
+    auctionsRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const auctions = [
     { id: 'A-1001', title: 'Sago Lot A - 50 MT', date: '2026-01-20T10:00:00Z' },
     { id: 'B-2001', title: 'Starch Lot B - 30 MT', date: '2026-01-22T14:00:00Z' },
@@ -240,14 +246,11 @@ export default function Auction() {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in" style={{ animationDelay: '0.3s' }}>
-            <button className="group relative px-8 py-4 bg-white text-emerald-600 font-bold rounded-full hover:shadow-2xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+            <button onClick={scrollToAuctions} className="group relative px-8 py-4 bg-white text-emerald-600 font-bold rounded-full hover:shadow-2xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
               <span className="relative z-10">Explore Auctions</span>
               <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
             </button>
-            <button className="group relative px-8 py-4 bg-white/20 backdrop-blur-md text-white font-bold rounded-full border border-white/30 hover:bg-white/30 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
-              <Users className="w-5 h-5" />
-              <span>Register Now</span>
-            </button>
+           
           </div>
 
           {/* Scroll indicator */}
@@ -261,7 +264,7 @@ export default function Auction() {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-10 space-y-16">
         {/* Current Auctions */}
-        <section>
+        <section ref={auctionsRef}>
           <SectionTitle 
             title="Current Auctions" 
             subtitle="Live countdown to upcoming events"

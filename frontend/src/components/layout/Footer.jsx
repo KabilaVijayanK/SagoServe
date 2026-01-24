@@ -49,9 +49,14 @@ const Footer = () => {
         {/* Brand */}
         <div>
           <div className="flex items-center gap-3 mb-4">
-            <div className="h-10 w-10 rounded-lg bg-green-600 flex items-center justify-center text-white font-bold">
-              S
-            </div>
+           {/* LOGO */}
+  <div className="h-12 w-auto flex items-center">
+    <img
+      src="/header-logooo.png"
+      alt="Company Logo"
+      className="h-12 w-auto object-contain"
+    />
+  </div>
             <h3 className="text-xl font-semibold text-white">SAGOSERVE</h3>
           </div>
 

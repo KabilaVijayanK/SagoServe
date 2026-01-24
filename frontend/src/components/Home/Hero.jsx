@@ -49,9 +49,10 @@ export default function Hero() {
     >
       Your Trusted Source for{" "}
       <span className="font-semibold">Quality</span>{" "}
-      <span className="font-semibold text-green-400 border-b-2 border-green-500 pb-1 inline-block">
-        Sago and Starch
-      </span>
+      <span className="font-semibold text-[#6FAF6A] border-b-2 border-[#5E9E5A] pb-1 inline-block">
+  Sago and Starch
+</span>
+
     </p>
 
     {/* DESCRIPTION LINE 1 */}
@@ -66,22 +67,51 @@ export default function Hero() {
 
     {/* DESCRIPTION LINE 2 */}
     <p
-      className="text-sm md:text-base font-medium text-green-400 tracking-wide mb-10"
-      style={{
-        textShadow: "0 3px 10px rgba(0,0,0,0.6)",
-      }}
-    >
-      Co-operative Society Ltd.
-    </p>
+  className="text-sm md:text-base font-medium text-[#6FAF6A] tracking-wide mb-10"
+  style={{
+    textShadow: "0 3px 10px rgba(0,0,0,0.6)",
+  }}
+>
+  Co-operative Society Ltd.
+</p>
+
 
     {/* CTA */}
     <div className="flex flex-wrap gap-5">
       <button
-        onClick={() => navigate("/registration")}
-        className="px-8 py-4 rounded-full bg-green-600 text-white font-semibold hover:bg-green-700 shadow-[0_12px_34px_rgba(16,185,129,0.45)] transition-all duration-300"
-      >
-        Register Now
-      </button>
+  onClick={() => navigate("/registration")}
+  className="
+    relative overflow-hidden
+    px-8 py-4 rounded-full
+
+    bg-[#5A3A22] text-white font-semibold
+
+    shadow-[0_0_0_rgba(90,58,34,0)]
+    transition-all duration-300 ease-out
+
+    hover:shadow-[0_0_35px_rgba(90,58,34,0.65)]
+    hover:scale-[1.04]
+    active:scale-[0.98]
+  "
+>
+  {/* ✨ COVER / SHINE EFFECT */}
+  <span
+    className="
+      pointer-events-none
+      absolute inset-0
+      bg-gradient-to-r
+      from-transparent via-white/25 to-transparent
+      -translate-x-full
+      hover:translate-x-full
+      transition-transform duration-700
+    "
+  />
+
+  <span className="relative z-10">
+    Register Now
+  </span>
+</button>
+
 
       <button
         onClick={() => navigate("/auction")}

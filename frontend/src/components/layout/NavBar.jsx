@@ -23,28 +23,31 @@ export default function Navbar() {
 
   return (
     <header
-  className={`
-    fixed top-0 left-0 w-full z-50
-    transition-all duration-500 ease-in-out
-    ${
-      scrolled
-        ? "bg-gradient-to-r from-green-800 to-emerald-700 shadow-xl"
-        : "bg-gradient-to-r from-green-700 to-green-600"
-    }
-  `}
->
-
+      className={`
+        fixed top-0 left-0 w-full z-50
+        transition-all duration-500 ease-in-out
+        ${
+          scrolled
+            ? "bg-gradient-to-r from-[#5A3A22] to-[#8B5E3C] shadow-xl"
+            : "bg-gradient-to-r from-[#8B5E3C] to-[#5A3A22]"
+        }
+      `}
+    >
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
 
         {/* LOGO */}
-        <NavLink to="/" className="flex items-center gap-3 text-white font-bold text-xl">
-          <div className="w-10 h-10 rounded-lg bg-white text-green-700 flex items-center justify-center">
-            S
-          </div>
-          SAGOSERVE
+        <NavLink to="/" className="flex items-center gap-3 text-white">
+          <img
+            src="/header-logooo.png"
+            alt="SagoServe Logo"
+            className="h-12 w-auto object-contain"
+          />
+          <span className="text-lg font-semibold tracking-wide">
+            SAGOSERVE
+          </span>
         </NavLink>
 
-        {/* DESKTOP LINKS */}
+        {/* DESKTOP NAV */}
         <nav className="hidden lg:flex gap-8 text-white font-medium">
           {navItems.map((item) => (
             <NavLink
@@ -52,12 +55,17 @@ export default function Navbar() {
               to={item.path}
               className={({ isActive }) =>
                 `
-                  relative transition-all duration-300
-                  ${isActive ? "text-white font-semibold after:w-full" : "text-white/80"}
-                  hover:text-white after:absolute after:left-0 after:-bottom-1
-                  after:h-[2px] after:bg-white after:w-0 hover:after:w-full
-                  after:transition-all after:duration-300
-                `
+                relative transition-all duration-300
+                ${
+                  isActive
+                    ? "text-white font-semibold after:w-full"
+                    : "text-white/80"
+                }
+                hover:text-white
+                after:absolute after:left-0 after:-bottom-1
+                after:h-[2px] after:bg-white after:w-0
+                hover:after:w-full after:transition-all after:duration-300
+              `
               }
             >
               {item.name}
@@ -68,64 +76,47 @@ export default function Navbar() {
         {/* RIGHT ACTIONS */}
         <div className="flex items-center gap-4">
 
-         {/* CART */}
-<div className="relative group">
-  <NavLink
-    to="/cart"
-    className="
-      relative flex items-center gap-2
-      px-5 py-2.5 rounded-xl
+          {/* ENQUIRY CTA */}
+          <NavLink
+  to="/enquiry"
+  className="
+    relative flex items-center gap-2
+    px-6 py-2.5 rounded-xl
 
-      bg-white text-green-700
-      text-sm font-semibold
+    text-white text-sm font-semibold
+    border-2 border-white/80
+    bg-white/10 backdrop-blur-md
 
-      border border-green-200
-      shadow-md
+    shadow-[0_8px_24px_rgba(0,0,0,0.35)]
 
-      transition-all duration-300 ease-out
-      hover:bg-green-600 hover:text-white
-      hover:shadow-[0_12px_30px_rgba(16,185,129,0.45)]
-      hover:scale-[1.03]
-    "
+    transition-all duration-300 ease-out
+    hover:bg-white
+    hover:text-[#5A3A22]
+    hover:shadow-[0_16px_40px_rgba(255,255,255,0.45)]
+    hover:scale-[1.06]
+
+    focus:outline-none
+  "
+>
+  {/* ICON */}
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="w-4 h-4"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    strokeWidth={2}
   >
-    {/* Cart Icon */}
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="w-4 h-4"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={2}
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13M7 13l1.5 6M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"
-      />
-    </svg>
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M8 10h8m-8 4h6m-9 6h14a2 2 0 002-2V6a2 2 0 00-2-2H7a2 2 0 00-2 2v12a2 2 0 002 2z"
+    />
+  </svg>
 
-    <span>Cart</span>
-  </NavLink>
+  <span>Enquiry Now</span>
+</NavLink>
 
-  {/* CART COUNT */}
-  <span
-    className="
-      absolute -top-2 -right-2
-      w-5 h-5 rounded-full
-
-      bg-green-600 text-white
-      text-xs font-bold
-
-      flex items-center justify-center
-      shadow-lg
-      ring-2 ring-white
-    "
-  >
-    2
-  </span>
-</div>
-
-          
 
           {/* MOBILE MENU BUTTON */}
           <button
@@ -139,13 +130,13 @@ export default function Navbar() {
 
       {/* MOBILE MENU */}
       {menuOpen && (
-        <div className="lg:hidden bg-green-700 px-6 py-6 space-y-4 shadow-xl">
+        <div className="lg:hidden bg-[#5A3A22] px-6 py-6 space-y-4 shadow-xl">
           {navItems.map((item) => (
             <NavLink
               key={item.name}
               to={item.path}
               onClick={() => setMenuOpen(false)}
-              className="block text-white text-lg font-medium hover:text-green-200"
+              className="block text-white text-lg font-medium hover:text-white/80"
             >
               {item.name}
             </NavLink>

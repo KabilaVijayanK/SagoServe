@@ -47,68 +47,64 @@ export default function Products() {
   return (
     <main className="overflow-x-hidden bg-black">
 
-      {/* ================= HERO WITH PARALLAX ================= */}
-      <section className="relative h-screen flex items-center justify-center text-center overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center transition-transform duration-75"
-          style={{ 
-            backgroundImage: "url('/about.jpg')",
-            transform: `scale(${1.1 + scrollY * 0.0002}) translateY(${scrollY * 0.5}px)`
-          }}
-        />
-        
-        {/* Animated gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-black/95 via-emerald-900/80 to-black/95 animate-pulse" 
-             style={{ animationDuration: '4s' }} />
-        
-        {/* Floating particles */}
-        <div className="absolute inset-0 opacity-30">
-          {[...Array(20)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-2 h-2 bg-green-400 rounded-full animate-pulse"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 3}s`,
-                animationDuration: `${2 + Math.random() * 2}s`
-              }}
-            />
-          ))}
-        </div>
+      {/* ================= HERO ================= */}
+<section className="relative h-screen flex items-center justify-center text-center overflow-hidden">
+  <div
+    className="absolute inset-0 bg-cover bg-center transition-transform duration-75"
+    style={{
+      backgroundImage: "url('/about.jpg')",
+      transform: `scale(${1.1 + scrollY * 0.0002}) translateY(${scrollY * 0.5}px)`
+    }}
+  />
 
-        <div 
-          className="relative z-10 px-4 md:px-6 max-w-4xl w-full"
-          style={{
-            transform: `translateY(${scrollY * 0.3}px)`,
-            opacity: Math.max(0, 1 - scrollY / 500)
-          }}
-        >
-          <p className="text-green-400 tracking-[0.3em] mb-4 text-xs md:text-sm font-bold animate-pulse">
-            PRODUCT 
-          </p>
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6 leading-tight">
-            Engineered for{" "}
-            <span className="bg-gradient-to-r from-green-400 via-emerald-300 to-green-500 bg-clip-text text-transparent animate-pulse">
-              Quality
-            </span>
-          </h1>
-          <p className="text-white/90 text-base md:text-lg lg:text-xl leading-relaxed max-w-2xl mx-auto font-light px-2">
-            Sago, starch and value-added by-products manufactured with
-            uncompromised standards and laboratory-backed assurance.
-          </p>
-          
-          {/* Scroll indicator */}
-          <div className="mt-12 animate-bounce">
-            <div className="w-6 h-10 border-2 border-green-400 rounded-full mx-auto flex justify-center pt-2">
-              <div className="w-1.5 h-3 bg-green-400 rounded-full animate-pulse" />
-            </div>
-          </div>
-        </div>
+  <div className="absolute inset-0 bg-gradient-to-br from-black/95 via-[#3F2A20]/80 to-black/95 animate-pulse" />
 
-        {/* Bottom gradient fade */}
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent" />
-      </section>
+  <div className="absolute inset-0 opacity-30">
+    {[...Array(20)].map((_, i) => (
+      <div
+        key={i}
+        className="absolute w-2 h-2 bg-[#C89B6D] rounded-full animate-pulse"
+        style={{
+          left: `${Math.random() * 100}%`,
+          top: `${Math.random() * 100}%`,
+          animationDelay: `${Math.random() * 3}s`,
+        }}
+      />
+    ))}
+  </div>
+
+  <div
+    className="relative z-10 px-6 max-w-4xl"
+    style={{
+      transform: `translateY(${scrollY * 0.3}px)`,
+      opacity: Math.max(0, 1 - scrollY / 500)
+    }}
+  >
+    <p className="text-[#C89B6D] tracking-[0.3em] mb-4 text-sm font-bold">
+      PRODUCT
+    </p>
+
+    <h1 className="text-6xl font-black text-white mb-6">
+      Engineered for{" "}
+      <span className="bg-gradient-to-r from-[#C89B6D] via-[#8B5E3C] to-[#5A3A22] bg-clip-text text-transparent">
+        Quality
+      </span>
+    </h1>
+
+    <p className="text-white/90 text-lg max-w-2xl mx-auto">
+      Sago, starch and value-added by-products manufactured with uncompromised
+      standards and laboratory-backed assurance.
+    </p>
+
+    <div className="mt-12 animate-bounce">
+      <div className="w-6 h-10 border-2 border-[#C89B6D] rounded-full mx-auto flex justify-center pt-2">
+        <div className="w-1.5 h-3 bg-[#C89B6D] rounded-full" />
+      </div>
+    </div>
+  </div>
+
+  <div className="absolute bottom-0 w-full h-24 bg-gradient-to-t from-white to-transparent" />
+</section>
 
       {/* ================= SAGO VARIETIES ================= */}
       <section className="relative py-24 md:py-32 bg-gradient-to-b from-white via-gray-50 to-white">
@@ -122,7 +118,9 @@ export default function Products() {
           <div className="mb-16 md:mb-20 max-w-2xl text-center mx-auto">
             <p className="text-green-600 font-bold mb-3 tracking-widest text-xs md:text-sm">PRODUCT LINE</p>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-4 md:mb-6 leading-tight">
-              Sago <span className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">Varieties</span>
+              Sago <span className="bg-gradient-to-r from-[#8B5E3C] to-[#5A3A22] bg-clip-text text-transparent">
+          Varieties
+        </span>
             </h2>
             <p className="text-gray-600 text-sm md:text-base lg:text-lg leading-relaxed px-2">
               Carefully processed tapioca pearls designed for food-grade
@@ -157,7 +155,7 @@ export default function Products() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                     
                     {/* Overlay badge */}
-                    <div className="absolute top-3 md:top-6 right-3 md:right-6 bg-green-500 text-white px-4 md:px-6 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-bold
+                    <div className="absolute top-3 md:top-6 right-3 md:right-6 bg-[#8B5E3C] text-white px-4 md:px-6 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-bold
                     transform translate-x-32 group-hover:translate-x-0 transition-transform duration-500">
                       Premium
                     </div>
@@ -174,7 +172,7 @@ export default function Products() {
                       </p>
                     </div>
 
-                    <button className="group/btn relative overflow-hidden w-full px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-bold text-sm md:text-base rounded-full
+                    <button className="group/btn relative overflow-hidden w-full px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-[#8B5E3C] to-[#5A3A22] text-white font-bold text-sm md:text-base rounded-full
                     hover:shadow-[0_10px_40px_rgba(34,197,94,0.4)] transition-all duration-300">
                       <span className="relative z-10 flex items-center justify-center gap-2 md:gap-3">
                         Explore Details
@@ -204,7 +202,7 @@ export default function Products() {
       </section>
 
       {/* ================= STARCH VARIETIES ================= */}
-      <section className="relative py-24 md:py-32 bg-gradient-to-br from-slate-950 via-emerald-950 to-slate-950 text-white overflow-hidden">
+      <section className="relative py-24 md:py-32 bg-gradient-to-br from-[#2A1A12] via-[#3F2A20] to-black text-white overflow-hidden">
 
         {/* Animated background elements */}
         <div className="absolute inset-0">
@@ -224,7 +222,7 @@ export default function Products() {
           <div className="mb-16 md:mb-20 max-w-2xl text-center mx-auto">
             <p className="text-green-400 font-bold mb-3 tracking-widest text-xs md:text-sm">INDUSTRIAL RANGE</p>
             <h2 className="text-4xl md:text-gray-300 lg:text-6xl font-black mb-4 md:mb-6 leading-tight">
-              Starch <span className="bg-gradient-to-r from-green-400 to-emerald-300 bg-clip-text text-transparent">Varieties</span>
+              Starch <span className="md:text-gray-300 bg-clip-text text-transparent">Varieties</span>
             </h2>
             <p className="text-gray-300 text-sm md:text-base lg:text-lg leading-relaxed px-2">
               Precision-processed starch engineered for food and industrial performance.
@@ -253,7 +251,7 @@ export default function Products() {
                     />
                     
                     {/* Corner accent */}
-                    <div className="absolute -top-3 md:-top-4 -right-3 md:-right-4 w-16 md:w-24 h-16 md:h-24 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl" />
+                    <div className="absolute -top-3 md:-top-4 -right-3 md:-right-4 w-16 md:w-24 h-16 md:h-24 bg-gradient-to-r from-[#8B5E3C] to-[#5A3A22] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl" />
                   </div>
                 </div>
 
@@ -307,7 +305,7 @@ export default function Products() {
         </div>
 
         {/* Radial gradient accents */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 md:w-[600px] h-96 md:h-[600px] bg-green-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 md:w-[600px] h-96 md:h-[600px] bg-gradient-to-br from-[#2A1A12] via-[#3F2A20] to-black text-whiterounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }} />
 
         <div className="max-w-5xl mx-auto px-4 md:px-6 text-center relative z-10 w-full">
           <div className="inline-block px-4 md:px-6 py-2 md:py-3 bg-green-500/20 border border-green-400/30 rounded-full text-green-400 tracking-[0.3em] mb-6 md:mb-10 text-xs md:text-sm font-bold">
@@ -357,10 +355,10 @@ export default function Products() {
         <div className="max-w-6xl mx-auto px-4 md:px-6 relative z-10">
 
           <div className="text-center max-w-2xl mx-auto mb-16 md:mb-20">
-            <p className="text-green-600 font-bold mb-3 tracking-widest text-xs md:text-sm">ASSURANCE</p>
+            <p className="text-[#8B5E3C] font-bold mb-3 tracking-widest text-xs md:text-sm">ASSURANCE</p>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-4 md:mb-6 leading-tight">
-              Quality Standards &<br />
-              <span className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">Testing</span>
+              Quality Standards & <br />
+              <span className="bg-gradient-to-r from-[#8B5E3C] to-[#5A3A22] bg-clip-text text-transparent">Testing</span>
             </h2>
             <p className="text-gray-600 text-sm md:text-base lg:text-lg leading-relaxed px-2">
               Every batch is validated through rigorous laboratory protocols.
@@ -403,7 +401,7 @@ export default function Products() {
                   </p>
                   
                   {/* Hover indicator */}
-                  <div className="mt-4 md:mt-5 lg:mt-6 h-1 w-0 bg-gradient-to-r from-green-500 to-emerald-500 group-hover:w-full transition-all duration-500 rounded-full" />
+                  <div className="mt-4 md:mt-5 lg:mt-6 h-1 w-0 bg-gradient-to-r from-[#8B5E3C] to-[#5A3A22] group-hover:w-full transition-all duration-500 rounded-full" />
                 </div>
               </div>
             ))}

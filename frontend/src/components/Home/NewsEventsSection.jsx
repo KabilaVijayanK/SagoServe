@@ -35,33 +35,23 @@ export default function NewsEventsSection() {
 
   return (
     <section className="relative py-24 bg-white overflow-hidden">
-      {/* 🌿 SUBTLE GREEN DECORATION */}
-      <div className="absolute -top-40 -left-40 w-[420px] h-[420px] bg-green-200/40 rounded-full blur-[160px]" />
-      <div className="absolute bottom-0 right-0 w-[380px] h-[380px] bg-emerald-200/40 rounded-full blur-[160px]" />
+      {/* 🎨 BROWN DECORATION */}
+      <div className="absolute -top-40 -left-40 w-[420px] h-[420px] bg-[#8B5E3C]/20 rounded-full blur-[160px]" />
+      <div className="absolute bottom-0 right-0 w-[380px] h-[380px] bg-[#5A3A22]/20 rounded-full blur-[160px]" />
 
       <div ref={ref} className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid md:grid-cols-2 gap-10">
 
           {/* 📰 LATEST NEWS */}
-          <div
-            className="
-              animate-card opacity-0 translate-y-10
-              transition-all duration-700
-              bg-white
-              rounded-2xl
-              border border-gray-200
-              shadow-lg
-              p-6
-            "
-          >
+          <div className="animate-card opacity-0 translate-y-10 transition-all duration-700 bg-white rounded-2xl border border-gray-200 shadow-lg p-6">
             <div className="flex items-center justify-between mb-5">
               <div className="flex items-center gap-3">
-                <Bell className="text-green-600" />
+                <Bell className="text-[#8B5E3C]" />
                 <h3 className="text-xl font-semibold text-gray-900">
                   Latest News
                 </h3>
               </div>
-              <a href="/news" className="text-sm text-green-600 hover:underline">
+              <a href="/news" className="text-sm text-[#8B5E3C] hover:underline">
                 All news
               </a>
             </div>
@@ -70,19 +60,15 @@ export default function NewsEventsSection() {
               {news.map((item, i) => (
                 <div
                   key={i}
-                  className="
-                    flex gap-4 p-4 rounded-xl
-                    bg-gray-50 hover:bg-green-50
-                    transition
-                  "
+                  className="flex gap-4 p-4 rounded-xl bg-gray-50 hover:bg-[#F6EFEA] transition"
                 >
-                  <div className="w-1 rounded-full bg-green-500" />
+                  <div className="w-1 rounded-full bg-[#8B5E3C]" />
                   <div className="flex-1">
                     <div className="flex justify-between gap-3">
                       <p className="text-sm font-medium text-gray-900">
                         {item.title}
                       </p>
-                      <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">
+                      <span className="text-xs bg-[#F6EFEA] text-[#5A3A22] px-2 py-0.5 rounded-full font-semibold">
                         {item.tag}
                       </span>
                     </div>
@@ -94,19 +80,9 @@ export default function NewsEventsSection() {
           </div>
 
           {/* ⏰ TODAY'S EVENTS */}
-          <div
-            className="
-              animate-card opacity-0 translate-y-10
-              transition-all duration-700 delay-150
-              bg-white
-              rounded-2xl
-              border border-gray-200
-              shadow-lg
-              p-6
-            "
-          >
+          <div className="animate-card opacity-0 translate-y-10 transition-all duration-700 delay-150 bg-white rounded-2xl border border-gray-200 shadow-lg p-6">
             <div className="flex items-center gap-3 mb-5">
-              <Clock className="text-green-600" />
+              <Clock className="text-[#8B5E3C]" />
               <h3 className="text-xl font-semibold text-gray-900">
                 Today's Events
               </h3>
@@ -116,16 +92,12 @@ export default function NewsEventsSection() {
               {events.map((event, i) => (
                 <div
                   key={i}
-                  className="
-                    flex items-center gap-4 p-4 rounded-xl
-                    bg-gray-50 hover:bg-green-50
-                    transition
-                  "
+                  className="flex items-center gap-4 p-4 rounded-xl bg-gray-50 hover:bg-[#F6EFEA] transition"
                 >
                   <span
                     className={`w-3 h-3 rounded-full ${
                       event.status === "Happening"
-                        ? "bg-green-500 animate-pulse"
+                        ? "bg-[#8B5E3C] animate-pulse"
                         : "bg-gray-400"
                     }`}
                   />
@@ -138,7 +110,7 @@ export default function NewsEventsSection() {
                   <span
                     className={`text-xs font-semibold px-3 py-1 rounded-full ${
                       event.status === "Happening"
-                        ? "bg-green-100 text-green-700"
+                        ? "bg-[#F6EFEA] text-[#5A3A22]"
                         : "bg-gray-100 text-gray-600"
                     }`}
                   >

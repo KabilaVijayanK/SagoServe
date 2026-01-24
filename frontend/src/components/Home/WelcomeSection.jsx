@@ -1,303 +1,157 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 
 export default function WelcomeSection() {
-  const sectionRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"]
-  });
-
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
-  const contentY = useTransform(scrollYProgress, [0, 1], [0, -100]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.8, 0.3]);
-
   return (
-    <section ref={sectionRef} className="relative min-h-[92vh] flex items-center overflow-hidden">
-      {/* ANIMATED BACKGROUND */}
-      <motion.div
-        style={{ scale: imageScale }}
-        className="absolute inset-0 bg-cover bg-center"
-        initial={{ scale: 1.1 }}
-      >
-        <div 
-          className="w-full h-full bg-cover bg-center"
-          style={{ backgroundImage: "url('/hero-about.jpg')" }}
-        />
-      </motion.div>
+    <section className="relative h-screen w-full overflow-hidden font-inter">
 
-      {/* DYNAMIC OVERLAYS */}
-      <div className="absolute inset-0 bg-black/70" />
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.5 }}
-        className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/75 to-black/90" 
+      {/* BACKGROUND IMAGE */}
+      <div
+        className="absolute inset-0 bg-cover bg-center scale-105"
+        style={{ backgroundImage: "url('/hero-about.jpg')" }}
       />
 
-      {/* FLOATING PARTICLES */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
+      {/* DARK CINEMATIC OVERLAY */}
+      <div className="absolute inset-0 bg-black/70" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/80 to-black/95" />
+
+      {/* PARTICLE GLOW */}
+      <div className="absolute inset-0 pointer-events-none">
+        {[...Array(25)].map((_, i) => (
+          <motion.span
             key={i}
-            className="absolute w-1 h-1 bg-green-400/30 rounded-full"
+            className="absolute w-1 h-1 rounded-full bg-amber-400/30"
             initial={{
               x: Math.random() * window.innerWidth,
-              y: window.innerHeight + 20,
-              scale: Math.random() * 0.5 + 0.5
+              y: window.innerHeight + 40,
+              opacity: 0,
             }}
             animate={{
-              y: -20,
-              x: Math.random() * window.innerWidth,
+              y: -40,
+              opacity: [0, 1, 0],
             }}
             transition={{
-              duration: Math.random() * 10 + 15,
+              duration: Math.random() * 15 + 12,
               repeat: Infinity,
               delay: Math.random() * 5,
-              ease: "linear"
             }}
           />
         ))}
       </div>
 
       {/* CONTENT */}
-      <motion.div 
-        style={{ y: contentY, opacity: contentOpacity }}
-        className="relative z-10 max-w-7xl mx-auto px-6 text-center"
-      >
-        {/* TAG WITH GLOW */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="flex justify-center mb-6"
-        >
-          <motion.span
-            animate={{ 
-              boxShadow: [
-                "0 0 20px rgba(34, 197, 94, 0.3)",
-                "0 0 30px rgba(34, 197, 94, 0.5)",
-                "0 0 20px rgba(34, 197, 94, 0.3)"
-              ]
-            }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="px-5 py-2 text-[11px] tracking-widest font-semibold text-green-400 border border-green-500/40 rounded-full backdrop-blur-sm bg-green-500/5"
-          >
-            WELCOME TO SAGOSERVE
-          </motion.span>
-        </motion.div>
+      <div className="relative z-10 h-full flex items-center">
+        <div className="max-w-6xl mx-auto px-6 text-center">
 
-        {/* TITLE WITH STAGGER EFFECT */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          className="mb-8"
-        >
-          <motion.h1
-            variants={{
-              hidden: { opacity: 0 },
-              visible: { 
-                opacity: 1,
-                transition: { staggerChildren: 0.03, delayChildren: 0.15 }
-              }
-            }}
-            className="text-3xl md:text-4xl lg:text-[44px] font-semibold text-white leading-snug"
-          >
-            {"Salem Starch and Sago Manufacturers'".split("").map((char, i) => (
-              <motion.span
-                key={i}
-                variants={{
-                  hidden: { opacity: 0, y: 30 },
-                  visible: { opacity: 1, y: 0 }
-                }}
-              >
-                {char}
-              </motion.span>
-            ))}
-            <br />
-            <motion.span
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.5 }}
-              className="text-green-500 font-bold inline-block"
-            >
-              Service Industrial Co-operative Society Ltd
-            </motion.span>
-          </motion.h1>
-        </motion.div>
-
-        {/* SUBTITLE WITH REVEAL ANIMATION */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.8 }}
-          className="max-w-7xl mx-auto mt-8 space-y-8 text-[18px] md:text-[20px] lg:text-[22px] text-white/95 leading-[1.9] tracking-[0.02em]"
-        >
-          {[
-            {
-              text: "is a cooperative society established to empower starch and sago manufacturers of Salem through a transparent, structured, and member-focused ecosystem.",
-              highlight: "SAGOSERVE"
-            },
-            {
-              text: ", the society emerged at a time when manufacturers faced unfair pricing, limited access to institutional credit, and heavy dependency on intermediaries.",
-              highlight: "1981",
-              prefix: "Founded in "
-            },
-            {
-              text: " and commencing operations on ",
-              highlight: "July 21, 1981",
-              prefix: "Registered on ",
-              highlight2: "February 27, 1982",
-              suffix: ", SAGOSERVE has grown into a trusted pillar of progress for the local industry."
-            }
-          ].map((item, i) => (
-            <motion.p
-              key={i}
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 1 + i * 0.2 }}
-              className="text-white/90"
-            >
-              {item.prefix}
-              <motion.span
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 1.2 + i * 0.2 }}
-                className="text-green-400 font-semibold"
-              >
-                {item.highlight}
-              </motion.span>
-              {item.text}
-              {item.highlight2 && (
-                <>
-                  <motion.span
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: 1.4 + i * 0.2 }}
-                    className="text-green-400 font-semibold"
-                  >
-                    {item.highlight2}
-                  </motion.span>
-                  {item.suffix}
-                </>
-              )}
-            </motion.p>
-          ))}
-        </motion.div>
-
-        {/* ANIMATED DIVIDER */}
-        <motion.div className="my-14 flex justify-center">
+          {/* BADGE */}
           <motion.div
-            initial={{ scaleX: 0, opacity: 0 }}
-            animate={{ scaleX: 1, opacity: 1 }}
-            transition={{ duration: 1, delay: 1.8 }}
-            className="relative w-24 h-[2px] bg-gradient-to-r from-transparent via-green-500 to-transparent"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            className="mb-6"
           >
-            <motion.div
-              animate={{ x: [-100, 100] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-0 left-0 w-8 h-full bg-green-400 blur-sm"
-            />
+            <span className="inline-block px-6 py-2 text-[11px] tracking-[0.35em] font-semibold text-amber-300 border border-amber-400/40 rounded-full bg-black/40 shadow-[0_0_25px_rgba(255,193,7,0.35)]">
+              WELCOME TO SAGOSERVE
+            </span>
           </motion.div>
-        </motion.div>
 
-        {/* STATS WITH COUNTER ANIMATION */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: {},
-            visible: {
-              transition: {
-                staggerChildren: 0.3,
-                delayChildren: 2
-              }
-            }
-          }}
-          className="grid grid-cols-1 sm:grid-cols-2 gap-14 max-w-4xl mx-auto"
-        >
-          {[
-            {
-              value: 28.61,
-              label: "Inward Bags Handled",
-              desc: "Since 2003 across sago, starch and broken sago"
-            },
-            {
-              value: 27.48,
-              label: "Bags Invoiced",
-              desc: "Demonstrating efficiency and operational scale"
-            }
-          ].map((item, i) => (
-            <motion.div
-              key={i}
-              variants={{
-                hidden: { opacity: 0, y: 40, scale: 0.8 },
-                visible: { 
-                  opacity: 1, 
-                  y: 0, 
-                  scale: 1,
-                  transition: { 
-                    type: "spring",
-                    damping: 12,
-                    stiffness: 100
-                  }
-                }
-              }}
-              whileHover={{ 
-                scale: 1.05,
-                transition: { duration: 0.2 }
-              }}
-              className="relative group"
-            >
-              <motion.div
-                className="absolute inset-0 bg-green-500/10 rounded-2xl blur-xl"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
-              />
-              <div className="relative">
-                <motion.p 
-                  className="text-3xl md:text-4xl font-bold text-green-500"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 1, delay: 2.3 + i * 0.3 }}
-                >
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 2.5 + i * 0.3 }}
-                  >
-                    {item.value}
-                  </motion.span>
-                  {" "}
-                  <span className="text-sm font-normal text-white/70">
-                    Million
-                  </span>
-                </motion.p>
-                <motion.p 
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 2.7 + i * 0.3 }}
-                  className="text-white font-medium mt-2"
-                >
-                  {item.label}
-                </motion.p>
-                <motion.p 
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 2.9 + i * 0.3 }}
-                  className="text-white/60 text-sm mt-1"
-                >
-                  {item.desc}
-                </motion.p>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </motion.div>
+          {/* TITLE */}
+          <motion.h1
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.1, delay: 0.2 }}
+            className="text-[32px] md:text-[40px] lg:text-[46px] font-semibold text-white leading-tight"
+          >
+            Salem Starch and Sago Manufacturers’
+            <br />
+            <span className="block mt-2 text-[#C9A27A] font-bold">
+              Service Industrial Co-operative Society Ltd
+            </span>
+          </motion.h1>
 
-      {/* BOTTOM GRADIENT FADE */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent pointer-events-none" />
+          {/* DESCRIPTION */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 1 }}
+            className="mt-8 max-w-4xl mx-auto space-y-4 text-[16px] leading-[1.85] text-white/85"
+          >
+            <p className="text-white/95 leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
+  <span className="text-[#8B5E3C] font-semibold">SAGOSERVE</span> is a
+  cooperative society empowering starch and sago manufacturers of
+  Salem through a transparent, structured, member-focused ecosystem.
+</p>
+
+<p className="text-white/95 leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
+  Founded in{" "}
+  <span className="text-[#8B5E3C] font-semibold">1981</span>, the society
+  emerged during a time of unfair pricing, limited institutional credit,
+  and heavy dependency on intermediaries.
+</p>
+
+<p className="text-white/95 leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
+  Registered on{" "}
+  <span className="text-[#8B5E3C] font-semibold">July 21, 1981</span> and
+  commencing operations on{" "}
+  <span className="text-[#8B5E3C] font-semibold">
+    February 27, 1982
+  </span>
+  , SAGOSERVE has grown into a trusted pillar of progress.
+</p>
+
+          </motion.div>
+
+          {/* STATS */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 1 }}
+            className="mt-14 grid grid-cols-1 sm:grid-cols-2 gap-10 max-w-4xl mx-auto"
+          >
+
+            {/* LEFT CARD – BLUE */}
+            <div className="relative rounded-2xl border border-blue-400/40 bg-black/40 backdrop-blur-md px-8 py-6 shadow-[0_0_35px_rgba(59,130,246,0.45)]">
+              <p className="text-[36px] font-bold text-blue-300">
+                28.61{" "}
+                <span className="text-sm font-medium text-white/60">Million</span>
+              </p>
+              <p className="mt-1 text-white font-medium">
+                Inward Bags Handled
+              </p>
+              <p className="mt-1 text-sm text-white/60">
+                Since 2003 across sago, starch and broken sago
+              </p>
+            </div>
+
+            {/* RIGHT CARD – GOLD */}
+           <div
+  className="
+    relative rounded-2xl
+    border border-[#8B5E3C]/60
+    bg-black/45 backdrop-blur-md
+    px-8 py-6
+
+    shadow-[0_0_45px_rgba(139,94,60,0.6)]
+  "
+>
+
+              <p className="text-[36px] font-bold text-amber-300">
+                27.48{" "}
+                <span className="text-sm font-medium text-white/60">Million</span>
+              </p>
+              <p className="mt-1 text-white font-medium">
+                Bags Invoiced
+              </p>
+              <p className="mt-1 text-sm text-white/60">
+                Demonstrating efficiency and operational scale
+              </p>
+            </div>
+
+          </motion.div>
+        </div>
+      </div>
+
+      {/* BOTTOM FADE */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent" />
     </section>
   );
 }

@@ -69,16 +69,17 @@ export default function ServicesWeOffer() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative py-32 overflow-hidden">
-      {/* 🌿 BACKGROUND */}
+    <section ref={sectionRef} className="relative py-32 overflow-hidden bg-white">
+      {/* 🤎 SOFT BACKGROUND (NO GREEN) */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-white to-emerald-100" />
-        <div className="absolute -top-24 -left-24 w-96 h-96 bg-green-300/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-80 h-80 bg-emerald-400/20 rounded-full blur-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-br from-white via-[#F7F4EF] to-white" />
+        <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#8B5E3C]/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
-        <h2 className="text-4xl md:text-5xl font-bold text-green-600 mb-20 reveal">
+        {/* TITLE */}
+        <h2 className="text-4xl md:text-5xl font-bold text-[#8B5E3C] mb-20 reveal">
           Services We Offer
         </h2>
 
@@ -92,20 +93,22 @@ export default function ServicesWeOffer() {
                 className="reveal"
                 style={{ transitionDelay: `${index * 120}ms` }}
               >
-                <div className="group p-7 rounded-2xl bg-white/70 backdrop-blur-xl border border-white/40 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
+                <div className="group p-7 rounded-2xl bg-white border border-gray-200 shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-500">
                   <div className="flex gap-5 items-start">
-                    <div className="h-14 w-14 rounded-xl bg-green-100 flex items-center justify-center group-hover:bg-green-600 transition-colors">
+                    {/* ICON */}
+                    <div className="h-14 w-14 rounded-xl bg-blue-50 flex items-center justify-center group-hover:bg-blue-600 transition-colors">
                       <Icon
                         size={28}
-                        className="text-green-600 group-hover:text-white"
+                        className="text-blue-600 group-hover:text-white"
                       />
                     </div>
 
+                    {/* CONTENT */}
                     <div>
                       <h3 className="text-xl font-semibold text-gray-900">
                         {service.title}
                       </h3>
-                      <p className="mt-2 text-gray-600 leading-relaxed text-sm">
+                      <p className="mt-2 text-gray-700 leading-relaxed text-sm">
                         {service.desc}
                       </p>
                     </div>
@@ -116,24 +119,20 @@ export default function ServicesWeOffer() {
           })}
         </div>
 
-        {/* 🔁 MOVING VALUE STRIP (BOTTOM) */}
-<div className="relative mt-28 overflow-hidden select-none">
-  {/* LEFT FADE */}
-  <div className="pointer-events-none absolute left-0 top-0 h-full w-32 bg-gradient-to-r from-transparent to-transparent z-10" />
-  {/* RIGHT FADE */}
-  <div className="pointer-events-none absolute right-0 top-0 h-full w-32 bg-gradient-to-l from-transparent to-transparent z-10" />
-
-  <div className="marquee-track">
-    {[...marqueeTexts, ...marqueeTexts].map((text, i) => (
-      <span key={i} className="marquee-item">
-        <span className="dot" />
-        {text}
-      </span>
-    ))}
-  </div>
-</div>
-
-
+        {/* 🔁 MOVING VALUE STRIP (NO GREEN) */}
+        <div className="relative mt-28 overflow-hidden select-none">
+          <div className="marquee-track">
+            {[...marqueeTexts, ...marqueeTexts].map((text, i) => (
+              <span
+                key={i}
+                className="marquee-item text-[#5A3A22] font-medium"
+              >
+                <span className="mx-3 text-blue-600">•</span>
+                {text}
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

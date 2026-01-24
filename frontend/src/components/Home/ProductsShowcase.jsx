@@ -48,21 +48,20 @@ export default function ProductsShowcase() {
       ref={ref}
       className="relative pt-24 pb-32 overflow-hidden bg-black"
     >
-      {/* 🌑 PREMIUM DARK BACKGROUND */}
+      {/* 🌑 PREMIUM DARK BACKGROUND (BROWN GLOW) */}
       <div className="absolute inset-0 -z-10">
-        {/* base */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-black to-[#06140f]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-black to-[#140b05]" />
 
-        {/* soft green glows */}
-        <div className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-green-600/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-[420px] h-[420px] bg-emerald-500/10 rounded-full blur-3xl" />
+        {/* brown glows */}
+        <div className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-[#8B5E3C]/15 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-[420px] h-[420px] bg-[#5A3A22]/20 rounded-full blur-3xl" />
       </div>
 
       {/* CONTENT */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
         {/* TITLE */}
         <h2 className="text-center text-4xl md:text-5xl font-extrabold text-white mb-14">
-          Our <span className="text-green-400">Products</span>
+          Our <span className="text-[#8B5E3C]">Products</span>
         </h2>
 
         {/* CARDS */}
@@ -88,7 +87,7 @@ export default function ProductsShowcase() {
                   alt={p.name}
                   className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
               </div>
 
               {/* TEXT */}
@@ -97,13 +96,20 @@ export default function ProductsShowcase() {
                   {p.name}
                 </h3>
 
-                <p className="mt-2 text-sm text-white/80 flex-grow leading-relaxed">
+                <p className="mt-2 text-sm text-white/90 flex-grow leading-relaxed">
                   {p.desc}
                 </p>
 
                 <div className="mt-5">
-                  <Button onClick={() => (window.location.href = "/products")}>
-                    Purchase Now
+                  <Button
+                    className="
+                      bg-[#8B5E3C] text-white
+                      hover:bg-[#5A3A22]
+                      shadow-[0_8px_25px_rgba(139,94,60,0.45)]
+                    "
+                    onClick={() => (window.location.href = "/products")}
+                  >
+                    Enquiry Now
                   </Button>
                 </div>
               </div>

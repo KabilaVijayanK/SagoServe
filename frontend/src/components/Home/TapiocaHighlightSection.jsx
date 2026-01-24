@@ -28,7 +28,7 @@ export default function TapiocaHighlightSection() {
       />
 
       {/* OVERLAY */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/70 to-black/85" />
 
       {/* CONTENT */}
       <div className="relative z-10 h-full flex items-center justify-center px-6">
@@ -37,20 +37,22 @@ export default function TapiocaHighlightSection() {
           ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
           {/* MAIN LINE */}
-          <h2 className="text-white font-extrabold leading-tight text-3xl md:text-5xl lg:text-6xl">
+          <h2 className="text-white font-extrabold leading-tight text-3xl md:text-5xl lg:text-6xl drop-shadow-[0_6px_18px_rgba(0,0,0,1)]">
             At the heart of our operations is{" "}
-            <span className="text-green-400">Tapioca</span> and its finished products
+            <span className="text-[#8B5E3C]">
+              Tapioca
+            </span>{" "}
+            and its finished products
           </h2>
 
-          
           {/* SUPPORT TEXT */}
-          <p className="mt-6 text-green-300 text-base md:text-lg font-semibold max-w-3xl mx-auto">
+          <p className="mt-6 text-white text-base md:text-lg font-semibold max-w-3xl mx-auto drop-shadow-[0_4px_12px_rgba(0,0,0,1)]">
             We add value through efficient processing, transparent marketing,
             and large-scale distribution.
           </p>
 
           {/* ACCENT */}
-          <div className="mt-10 mx-auto w-20 h-[3px] bg-green-400 rounded-full" />
+          <div className="mt-10 mx-auto w-20 h-[3px] bg-[#8B5E3C] rounded-full" />
         </div>
       </div>
     </section>
