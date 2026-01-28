@@ -1,121 +1,131 @@
-import React, { useEffect, useRef } from "react";
-import Button from "../common/Button";
+import React, { useRef, useLayoutEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Star } from "lucide-react";
 
+gsap.registerPlugin(ScrollTrigger);
+
+/* ===== DATA (UNCHANGED) ===== */
 const products = [
   {
-    id: "sago",
-    name: "Sago",
+    id: "p1",
+    name: "Indco's Mountain Rose Gold Tea",
     image: "/hero1.jpg",
-    desc: "High quality sago produced and traded through SAGOSERVE regulated market.",
+    desc: "This hand-picked, premium tea is made from the finest carefully selected tea leaves. Every sip reminds you of the Nilgiris.",
+    price: "₹140.00",
+    featured: true,
   },
   {
-    id: "starch",
-    name: "Tapioca Starch",
+    id: "p2",
+    name: "Ooty Tea Gold",
     image: "/hero2.jpg",
-    desc: "Certified tapioca starch tested and approved by SAGOSERVE laboratory.",
+    desc: "This premium blend of Ooty Tea is one of the finest blends from Indcoserve, known for its strong aroma and taste.",
+    price: "₹130.00",
+    featured: true,
   },
   {
-    id: "broken-sago",
-    name: "Broken Sago",
+    id: "p3",
+    name: "Indco's Marlimund Premium Tea",
     image: "/hero3.jpg",
-    desc: "By-product sago supplied to various industrial and food applications.",
+    desc: "Marlimund is a specialty tea from Gudalur region in the Nilgiris Biosphere Reserve.",
+    price: "₹130.00",
+    featured: true,
   },
 ];
 
+/* ===== PRODUCT CARD ===== */
+function ProductCard({ product, index, cardRefs }) {
+  return (
+    <div
+      ref={(el) => (cardRefs.current[index] = el)}
+      className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-500 overflow-hidden"
+    >
+      {/* Featured */}
+      {product.featured && (
+        <div className="absolute mt-3 ml-3 z-10 bg-[#3b2a1a] text-white text-xs font-bold px-2 py-1 flex items-center gap-1">
+          <Star size={12} className="fill-white" />
+          Featured
+        </div>
+      )}
+
+      {/* Image */}
+      <div className="h-64 flex items-center justify-center bg-white">
+        <img
+          src={product.image}
+          alt={product.name}
+          className="h-full object-contain"
+        />
+      </div>
+
+      {/* Content */}
+      <div className="p-5">
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">
+          {product.name}
+        </h3>
+
+        <p className="text-sm text-gray-600 leading-relaxed mb-5 line-clamp-3">
+          {product.desc}
+        </p>
+
+        <div className="flex items-center justify-between">
+          <span className="text-xl font-bold text-gray-900">
+            {product.price}
+          </span>
+
+          <button className="bg-[#8BC34A] hover:bg-[#7cb342] text-white px-4 py-2 text-xs font-bold transition">
+            SHOP ONLINE
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ===== MAIN SECTION ===== */
 export default function ProductsShowcase() {
-  const ref = useRef(null);
+  const sectionRef = useRef(null);
+  const cardRefs = useRef([]);
 
-  useEffect(() => {
-    const cards = ref.current.querySelectorAll(".product-card");
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        cardRefs.current,
+        {
+          y: 120,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          ease: "power3.out",
+          stagger: 0.2,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 75%",
+          },
+        }
+      );
+    }, sectionRef);
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add("opacity-100", "translate-y-0");
-          }
-        });
-      },
-      { threshold: 0.25 }
-    );
-
-    cards.forEach((c) => observer.observe(c));
-    return () => observer.disconnect();
+    return () => ctx.revert();
   }, []);
 
   return (
     <section
-      ref={ref}
-      className="relative pt-24 pb-32 overflow-hidden bg-black"
+      ref={sectionRef}
+      className="relative bg-[#f5f5f5] py-24"
     >
-      {/* 🌑 PREMIUM DARK BACKGROUND (BROWN GLOW) */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-black to-[#140b05]" />
-
-        {/* brown glows */}
-        <div className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-[#8B5E3C]/15 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-[420px] h-[420px] bg-[#5A3A22]/20 rounded-full blur-3xl" />
-      </div>
-
-      {/* CONTENT */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
-        {/* TITLE */}
-        <h2 className="text-center text-4xl md:text-5xl font-extrabold text-white mb-14">
-          Our <span className="text-[#8B5E3C]">Products</span>
-        </h2>
-
-        {/* CARDS */}
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {products.map((p, i) => (
-            <div
-              key={p.id}
-              className="
-                product-card opacity-0 translate-y-10
-                transition-all duration-700 ease-out
-                bg-white/10 backdrop-blur-xl
-                rounded-2xl overflow-hidden
-                border border-white/10
-                shadow-xl hover:shadow-2xl hover:-translate-y-2
-                flex flex-col
-              "
-              style={{ transitionDelay: `${i * 120}ms` }}
-            >
-              {/* IMAGE */}
-              <div className="relative aspect-[4/3] overflow-hidden">
-                <img
-                  src={p.image}
-                  alt={p.name}
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-              </div>
-
-              {/* TEXT */}
-              <div className="p-6 flex flex-col flex-grow">
-                <h3 className="text-xl font-semibold text-white">
-                  {p.name}
-                </h3>
-
-                <p className="mt-2 text-sm text-white/90 flex-grow leading-relaxed">
-                  {p.desc}
-                </p>
-
-                <div className="mt-5">
-                  <Button
-                    className="
-                      bg-[#8B5E3C] text-white
-                      hover:bg-[#5A3A22]
-                      shadow-[0_8px_25px_rgba(139,94,60,0.45)]
-                    "
-                    onClick={() => (window.location.href = "/products")}
-                  >
-                    Enquiry Now
-                  </Button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+      {/* GRID */}
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        {products.map((product, index) => (
+          <ProductCard
+            key={product.id}
+            product={product}
+            index={index}
+            cardRefs={cardRefs}
+          />
+        ))}
       </div>
     </section>
   );

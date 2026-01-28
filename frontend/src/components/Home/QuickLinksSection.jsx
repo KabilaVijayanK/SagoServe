@@ -1,99 +1,142 @@
-import React from "react";
+import React, { useRef } from "react";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { UserPlus, Gavel, Package, ArrowRight } from "lucide-react";
 
-const links = [
+const items = [
   {
     title: "Register",
-    desc: "Create your SAGOSERVE account and access market services.",
+    desc: "Create your account and get verified access to SAGOSERVE.",
     icon: UserPlus,
-    color: "from-[#8B5E3C] to-[#5A3A22]",
     link: "/registration",
   },
   {
     title: "Live Auctions",
-    desc: "Participate in live & scheduled auctions with transparency.",
+    desc: "Participate in transparent real-time and scheduled auctions.",
     icon: Gavel,
-    color: "from-[#7A4A2E] to-[#4A2E1D]",
     link: "/auction",
   },
   {
     title: "Products",
-    desc: "Browse sago, starch & by-products in the regulated market.",
+    desc: "Explore sago, starch and by-products in the regulated market.",
     icon: Package,
-    color: "from-[#6B4F3F] to-[#3F2A20]",
     link: "/products",
   },
 ];
 
-export default function QuickLinksSection() {
+export default function StartUsingSectionBlue() {
+  const sectionRef = useRef(null);
+  const headerRef = useRef(null);
+
+  const headerInView = useInView(headerRef, { margin: "-20%" });
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  /* 🔥 PARALLAX */
+  const bgY = useTransform(scrollYProgress, [0, 1], [0, -120]);
+  const cardsY = useTransform(scrollYProgress, [0, 1], [80, -40]);
+  const opacity = useTransform(scrollYProgress, [0, 0.25], [0, 1]);
+
   return (
-    <section className="relative pt-24 pb-16 overflow-hidden">
+    <section
+      ref={sectionRef}
+      className="relative py-28 lg:py-36 bg-[#0B1220] overflow-hidden"
+    >
+      {/* BACKGROUND PARALLAX */}
+      <motion.div
+        style={{ y: bgY }}
+        className="absolute inset-0 bg-gradient-to-b from-[#0B1220] via-[#0E1628] to-[#0B1220]"
+      />
 
-      {/* 🌊 LIGHT BLUE PREMIUM BACKGROUND */}
-     <div className="absolute inset-0 -z-10 bg-gradient-to-b 
-from-[#BBD6FF] via-[#DCEBFF] to-white" />
+      {/* GRID OVERLAY */}
+      <div
+        className="absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)",
+          backgroundSize: "60px 60px",
+        }}
+      />
 
+      <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
 
-      {/* soft blur accents */}
-      <div className="absolute -top-32 -left-32 w-[420px] h-[420px] bg-sky-200/40 rounded-full blur-[160px]" />
-      <div className="absolute bottom-0 right-0 w-[360px] h-[360px] bg-blue-200/40 rounded-full blur-[160px]" />
-
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-
-        {/* TITLE */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight">
-            Start Using <span className="text-[#5A3A22]">SAGOSERVE</span>
-          </h2>
-          <p className="mt-4 text-gray-600 text-lg max-w-2xl mx-auto">
-            Everything you need in one place
+        {/* HEADER */}
+        <motion.div
+          ref={headerRef}
+          style={{ opacity }}
+          initial={{ y: 50 }}
+          animate={headerInView ? { y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="max-w-3xl mx-auto mb-20"
+        >
+          <p className="text-sm uppercase tracking-[0.3em] text-[#4FD1C5] mb-5">
+            Platform Access
           </p>
-        </div>
 
-        {/* GRID */}
-        <div className="grid md:grid-cols-3 gap-10">
-          {links.map((item, i) => {
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
+            How <span className="text-[#4FD1C5]">SAGOSERVE</span> Works
+          </h2>
+
+          <p className="mt-6 text-gray-400 text-lg">
+            A simple, transparent and powerful workflow built for the
+            regulated market.
+          </p>
+        </motion.div>
+
+        {/* CARDS */}
+        <motion.div
+          style={{ y: cardsY }}
+          className="grid md:grid-cols-3 gap-8 lg:gap-10"
+        >
+          {items.map((item, i) => {
             const Icon = item.icon;
             return (
-              <a
+              <motion.a
                 key={i}
                 href={item.link}
-                className="
-                  group relative rounded-2xl
-                  bg-white/80 backdrop-blur-xl
-                  border border-white/60
-                  shadow-[0_10px_30px_rgba(0,0,0,0.08)]
-                  hover:shadow-[0_20px_50px_rgba(0,0,0,0.12)]
-                  transition-all duration-500
-                  hover:-translate-y-2
-                "
+                initial={{ opacity: 0, y: 100 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: 0.7,
+                  delay: i * 0.15,
+                  ease: "easeOut",
+                }}
+                className="group"
               >
-                {/* TOP STRIP */}
-                <div className={`h-2 rounded-t-2xl bg-gradient-to-r ${item.color}`} />
+                <div className="h-full rounded-3xl bg-[#111827] border border-white/10 px-8 py-10 transition-all duration-300 hover:border-[#4FD1C5]/50 hover:-translate-y-2">
 
-                <div className="p-7">
-                  <div className="w-14 h-14 rounded-xl bg-[#F6EFEA] flex items-center justify-center mb-5">
-                    <Icon className="w-6 h-6 text-[#5A3A22]" />
+                  {/* ICON */}
+                  <div className="mx-auto w-16 h-16 rounded-2xl bg-[#4FD1C5]/15 flex items-center justify-center mb-7">
+                    <Icon className="w-7 h-7 text-[#4FD1C5]" />
                   </div>
 
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  {/* TITLE */}
+                  <h3 className="text-xl font-semibold text-white mb-4">
                     {item.title}
                   </h3>
 
-                  <p className="text-gray-600 text-sm mb-6 leading-relaxed">
+                  {/* DESC */}
+                  <p className="text-gray-400 text-sm leading-relaxed mb-8">
                     {item.desc}
                   </p>
 
-                  <div className="inline-flex items-center gap-2 text-[#8B5E3C] font-semibold">
-                    Explore
+                  {/* CTA */}
+                  <div className="inline-flex items-center gap-2 text-[#4FD1C5] font-medium">
+                    <span>Explore</span>
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </div>
                 </div>
-              </a>
+              </motion.a>
             );
           })}
-        </div>
+        </motion.div>
       </div>
+
+      {/* BOTTOM FADE */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0B1220] to-transparent pointer-events-none" />
     </section>
   );
 }

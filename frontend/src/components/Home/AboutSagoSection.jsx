@@ -1,95 +1,113 @@
-import React from "react";
-import GlassSection from "../common/GlassSection";
+import React, { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function AboutSagoSection() {
+  const sectionRef = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  /* 🔥 PARALLAX VALUES */
+  const bgY = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
+  const glassY = useTransform(scrollYProgress, [0, 1], ["14%", "-14%"]);
+  const glassOpacity = useTransform(scrollYProgress, [0, 0.15], [0, 1]);
+  const glassScale = useTransform(scrollYProgress, [0, 0.3], [0.97, 1]);
+
   return (
-    <section className="relative py-24 overflow-hidden bg-black">
-      {/* 🔮 DARK BACKGROUND */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black via-neutral-900 to-black" />
+    <section
+      ref={sectionRef}
+      className="relative min-h-[95vh] bg-black overflow-hidden"
+    >
+      {/* 🌿 BACKGROUND IMAGE (SLOW PARALLAX) */}
+      <motion.div
+        style={{ y: bgY }}
+        className="absolute inset-0"
+      >
+        <img
+          src="/hero2.jpg"
+          alt="Tapioca"
+          className="w-full h-full object-cover opacity-35"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/80" />
+      </motion.div>
 
-      {/* 🌿 FLOATING GREEN GLOWS */}
-      <div className="absolute -top-40 -left-40 w-[500px] h-[500px] bg-green-500/20 rounded-full blur-[120px] animate-floatSlow" />
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-emerald-400/20 rounded-full blur-[120px] animate-floatSlow delay-500" />
-
-      {/* 🧊 GLASS CARD */}
-      <GlassSection className="relative max-w-7xl mx-auto px-6 lg:px-8">
+      {/* ✨ GLASS CONTENT CONTAINER */}
+      <motion.div
+        style={{ y: glassY, opacity: glassOpacity, scale: glassScale }}
+        className="relative z-10 max-w-6xl mx-auto px-6 pt-28 pb-20"
+      >
         <div
           className="
-            grid gap-14 lg:grid-cols-2 items-center
-            bg-white/90 backdrop-blur-2xl
-            rounded-[2.5rem]
-            p-10 md:p-14
-            shadow-[0_40px_140px_rgba(0,0,0,0.65)]
+            relative
+            grid grid-cols-1 lg:grid-cols-2 gap-10
+            rounded-3xl
+            px-8 py-10 md:px-12 md:py-12
+            bg-white/5 backdrop-blur-md
+            border border-white/10
+            shadow-[0_40px_120px_rgba(0,0,0,0.75)]
+            overflow-hidden
           "
         >
-          {/* 🖼️ LEFT – ANIMATED IMAGE */}
-          <div
+          {/* ✨ GLASS SHINE ANIMATION */}
+          <motion.div
+            initial={{ x: "-120%" }}
+            animate={{ x: "120%" }}
+            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
             className="
-              relative overflow-hidden rounded-3xl
-              bg-black
-              shadow-[0_25px_80px_rgba(0,0,0,0.7)]
-              transition-all duration-700
-              hover:-translate-y-2
+              pointer-events-none
+              absolute inset-0
+              bg-gradient-to-r
+              from-transparent
+              via-white/10
+              to-transparent
             "
-          >
-            <img
-              src="/hero1.jpg"
-              alt="Sagoserve Facility"
-              className="
-                w-full h-[220px] md:h-[320px]
-                object-cover
-                animate-kenburns
-              "
-            />
+          />
 
-            {/* overlay */}
-            <div className="absolute inset-0 bg-black/35" />
+          {/* LEFT CONTENT */}
+          <div className="relative z-10">
+            <span className="inline-block mb-4 px-4 py-1.5 rounded-full bg-[#8B5E3C]/25 text-[#C9A27A] text-xs font-semibold tracking-widest">
+              SAGOSERVE
+            </span>
 
-            {/* play icon */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
-                <div className="w-0 h-0 border-l-[12px] border-l-white border-y-[8px] border-y-transparent ml-1" />
-              </div>
-            </div>
-          </div>
-
-          {/* ✍️ RIGHT – CONTENT */}
-          <div className="space-y-6 animate-fadeUp">
-            <h2 className="text-4xl lg:text-5xl font-light tracking-wide text-green-600">
-              Sagoserve
+            <h2 className="text-3xl sm:text-4xl lg:text-[2.8rem] font-bold text-white leading-tight mb-4">
+              A Gift to{" "}
+              <span className="text-[#8B5E3C]">Tapioca Industry</span>
             </h2>
 
-            <h3 className="text-2xl lg:text-3xl font-semibold text-gray-900">
-              A Gift to Tapioca Industry
-            </h3>
-
-            <p className="text-gray-700 leading-relaxed text-base lg:text-lg">
-              Prior to the formation of Sagoserve, starch and sago manufacturers
-              faced severe challenges in credit facilities and fair market
-              access. Middlemen exploitation and lack of organized warehousing
-              affected growth and transparency.
+            <p className="text-white/75 text-base lg:text-lg leading-relaxed mb-3">
+              As a pioneer and a supportive pillar of the tapioca market industry,
+              we at sagoserve provide assistance for starting and existing markets
+              to grow in the industry.
             </p>
 
-            <p className="text-gray-700 leading-relaxed text-base lg:text-lg">
-              Established in 1981 under the Tamil Nadu Co-operative Society Act,
-              Sagoserve empowers manufacturers with structured marketing,
-              laboratory services and transparent auction mechanisms.
+            <p className="text-white/60 text-base lg:text-lg leading-relaxed">
+              We provide them with market resources like live price information,
+              tenders and connect to farmers and manufacturers in order to meet
+              their demand.
             </p>
-
-            <a
-              href="/about"
-              className="
-                inline-flex items-center gap-2
-                text-green-700 font-semibold
-                hover:gap-4
-                transition-all duration-300
-              "
-            >
-              Learn More →
-            </a>
           </div>
+
+          {/* RIGHT FEATURES */}
+          <ul className="relative z-10 space-y-3 lg:pl-6">
+            {[
+              "Direct connection between farmers and manufacturers",
+              "Real-time market intelligence and price discovery",
+              "Quality standardization and certification support",
+              "Logistics and supply chain optimization",
+            ].map((item, i) => (
+              <li
+                key={i}
+                className="flex items-start gap-3 text-white/75 text-sm lg:text-base"
+              >
+                <span className="mt-2 w-2 h-2 rounded-full bg-[#8B5E3C]" />
+                {item}
+              </li>
+            ))}
+          </ul>
         </div>
-      </GlassSection>
+      </motion.div>
     </section>
   );
 }

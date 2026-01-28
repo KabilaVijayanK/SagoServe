@@ -1,139 +1,171 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import {
-  Users,
+  Settings,
   FlaskConical,
-  Store,
-  Warehouse,
-  FileText,
-  Leaf,
+  Globe,
+  Video,
+  Layers,
+  Users,
 } from "lucide-react";
 
 const services = [
   {
-    title: "Members",
-    desc: "Efficient services to members with a ready-made marketing floor for starch and sago.",
-    icon: Users,
+    title: "Machines",
+    desc: "Providing advanced machinery and equipment for sago and starch production with latest technology.",
+    icon: Settings,
   },
   {
     title: "Laboratory",
-    desc: "Sago samples tested in 5:1 ratio with 9 tests as per SAGOSERVE by-laws.",
+    desc: "Quality testing and analysis services with modern laboratory facilities.",
     icon: FlaskConical,
   },
   {
-    title: "Merchant",
-    desc: "Reliable services to merchants with transparent auction and trading support.",
-    icon: Store,
+    title: "Website",
+    desc: "Online platform for members to access services, information, and digital tools for SAGOSERVE.",
+    icon: Globe,
   },
   {
-    title: "Warehouse",
-    desc: "Registered manufacturers store and sell tapioca starch and sago products.",
-    icon: Warehouse,
+    title: "Workshops",
+    desc: "Regular training workshops for farmers and members on best practices and new techniques.",
+    icon: Video,
   },
   {
-    title: "Tender",
-    desc: "Buyers registered as dealers through tender deposit system.",
-    icon: FileText,
+    title: "Stores",
+    desc: "Well-stocked stores providing essential supplies and materials for tapioca farming and processing.",
+    icon: Layers,
   },
   {
-    title: "Tapioca",
-    desc: "Tapioca (Manihot Esculenta Crantz) introduced in India during late 18th century.",
-    icon: Leaf,
+    title: "Programs",
+    desc: "Various programs and initiatives to support farmers and enhance productivity.",
+    icon: Users,
   },
-];
-
-const marqueeTexts = [
-  "Understanding the Cooperative Framework",
-  "Transparent Marketing & Member Support",
-  "Supporting Members Across the Value Chain",
-  "Your Growth Journey",
-  "Sustainable Growth Through Cooperation",
 ];
 
 export default function ServicesWeOffer() {
   const sectionRef = useRef(null);
+  const titleRef = useRef(null);
 
-  useEffect(() => {
-    const items = sectionRef.current.querySelectorAll(".reveal");
+  const isTitleInView = useInView(titleRef, { once: false, margin: "-20%" });
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add("show");
-        });
-      },
-      { threshold: 0.25 }
-    );
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
 
-    items.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
+  /* 🔥 SCROLL DEPTH */
+  const sectionZ = useTransform(scrollYProgress, [0, 1], [0, -300]);
+  const cardsY = useTransform(scrollYProgress, [0, 1], [120, -120]);
 
   return (
-    <section ref={sectionRef} className="relative py-32 overflow-hidden bg-white">
-      {/* 🤎 SOFT BACKGROUND (NO GREEN) */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-white via-[#F7F4EF] to-white" />
-        <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#8B5E3C]/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl" />
+    <section
+      ref={sectionRef}
+      className="relative bg-[#080808] py-28 lg:py-40 overflow-hidden"
+      style={{ perspective: "1600px" }}
+    >
+      {/* BACKGROUND ATMOSPHERE */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[900px] bg-blue-500/10 rounded-full blur-[160px]" />
+        <div className="absolute bottom-0 right-0 w-[700px] h-[700px] bg-[#8B5E3C]/15 rounded-full blur-[180px]" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
-        {/* TITLE */}
-        <h2 className="text-4xl md:text-5xl font-bold text-[#8B5E3C] mb-20 reveal">
-          Services We Offer
+      {/* HEADER */}
+      <motion.div
+        ref={titleRef}
+        initial={{ opacity: 0, y: 80, rotateX: 18 }}
+        animate={
+          isTitleInView
+            ? { opacity: 1, y: 0, rotateX: 0 }
+            : { opacity: 0, y: 80, rotateX: 18 }
+        }
+        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+        className="relative z-10 text-center mb-24"
+      >
+        <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-white mb-6">
+          Services <span className="text-[#8B5E3C]">We Offer</span>
         </h2>
+        <p className="text-white/60 max-w-2xl mx-auto text-lg">
+          Comprehensive services designed to support farmers and enhance the quality of tapioca production.
+        </p>
+      </motion.div>
 
-        {/* SERVICES GRID */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-14">
-          {services.map((service, index) => {
-            const Icon = service.icon;
-            return (
-              <div
-                key={service.title}
-                className="reveal"
-                style={{ transitionDelay: `${index * 120}ms` }}
+      {/* 3D STACK */}
+      <motion.div
+        style={{ y: cardsY, translateZ: sectionZ }}
+        className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 px-6"
+      >
+        {services.map((service, index) => {
+          const Icon = service.icon;
+          return (
+            <motion.div
+              key={service.title}
+              initial={{ opacity: 0, y: 120, rotateX: 25 }}
+              whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+              viewport={{ once: true, margin: "-120px" }}
+              transition={{
+                duration: 0.9,
+                delay: index * 0.08,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              style={{ transformStyle: "preserve-3d" }}
+              className="relative"
+            >
+              <motion.div
+                whileHover={{
+                  y: -18,
+                  rotateX: -8,
+                  rotateY: index % 2 === 0 ? 8 : -8,
+                }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                className="
+                  relative h-full
+                  bg-[#111]
+                  rounded-3xl
+                  p-10
+                  border border-[#222]
+                  shadow-[0_60px_120px_rgba(0,0,0,0.75)]
+                  overflow-hidden
+                "
+                style={{ transformStyle: "preserve-3d" }}
               >
-                <div className="group p-7 rounded-2xl bg-white border border-gray-200 shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-500">
-                  <div className="flex gap-5 items-start">
-                    {/* ICON */}
-                    <div className="h-14 w-14 rounded-xl bg-blue-50 flex items-center justify-center group-hover:bg-blue-600 transition-colors">
-                      <Icon
-                        size={28}
-                        className="text-blue-600 group-hover:text-white"
-                      />
-                    </div>
+                {/* DEPTH LAYER */}
+                <div className="absolute inset-0 bg-gradient-to-br from-[#8B5E3C]/0 to-blue-500/0 hover:from-[#8B5E3C]/15 hover:to-blue-500/15 transition-all duration-500 rounded-3xl" />
 
-                    {/* CONTENT */}
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-900">
-                        {service.title}
-                      </h3>
-                      <p className="mt-2 text-gray-700 leading-relaxed text-sm">
-                        {service.desc}
-                      </p>
-                    </div>
-                  </div>
+                {/* ICON */}
+                <div
+                  className="w-16 h-16 rounded-2xl bg-[#8B5E3C]/20 flex items-center justify-center mb-8"
+                  style={{ transform: "translateZ(40px)" }}
+                >
+                  <Icon className="w-8 h-8 text-[#C9A27A]" />
                 </div>
-              </div>
-            );
-          })}
-        </div>
 
-        {/* 🔁 MOVING VALUE STRIP (NO GREEN) */}
-        <div className="relative mt-28 overflow-hidden select-none">
-          <div className="marquee-track">
-            {[...marqueeTexts, ...marqueeTexts].map((text, i) => (
-              <span
-                key={i}
-                className="marquee-item text-[#5A3A22] font-medium"
-              >
-                <span className="mx-3 text-blue-600">•</span>
-                {text}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
+                {/* TITLE */}
+                <h3
+                  className="text-2xl font-semibold text-white mb-4"
+                  style={{ transform: "translateZ(30px)" }}
+                >
+                  {service.title}
+                </h3>
+
+                {/* DESC */}
+                <p
+                  className="text-white/60 text-base leading-relaxed"
+                  style={{ transform: "translateZ(22px)" }}
+                >
+                  {service.desc}
+                </p>
+
+                {/* EDGE LINE */}
+                <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#8B5E3C] to-blue-500 scale-x-0 hover:scale-x-100 transition-transform duration-500 origin-left" />
+              </motion.div>
+            </motion.div>
+          );
+        })}
+      </motion.div>
+
+      {/* FADE EDGES */}
+      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#080808] to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#080808] to-transparent pointer-events-none" />
     </section>
   );
 }

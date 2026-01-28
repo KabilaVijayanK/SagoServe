@@ -1,157 +1,195 @@
-import { motion } from "framer-motion";
+import React, { useRef } from "react";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
 
 export default function WelcomeSection() {
+  const sectionRef = useRef(null);
+  const imageRef = useRef(null);
+  const contentRef = useRef(null);
+
+  const isImageInView = useInView(imageRef, { once: false, margin: "-15%" });
+  const isContentInView = useInView(contentRef, { once: false, margin: "-15%" });
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  /* 🔥 SMOOTH CINEMATIC PARALLAX */
+  const imageY = useTransform(scrollYProgress, [0, 1], [90, -90]);
+  const imageScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.94, 1, 0.98]);
+  const imageRotate = useTransform(scrollYProgress, [0, 1], [2, -2]);
+
+  const contentY = useTransform(scrollYProgress, [0, 1], [70, -70]);
+  const badgeY = useTransform(scrollYProgress, [0, 1], [50, -50]);
+
   return (
-    <section className="relative h-screen w-full overflow-hidden font-inter">
+    <section
+      ref={sectionRef}
+      className="relative bg-[#141414] overflow-hidden py-20 lg:py-32"
+      style={{ perspective: "1400px" }}
+    >
+      {/* BACKGROUND DEPTH */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#2b1d12]/40 via-black to-black/90" />
 
-      {/* BACKGROUND IMAGE */}
-      <div
-        className="absolute inset-0 bg-cover bg-center scale-105"
-        style={{ backgroundImage: "url('/hero-about.jpg')" }}
-      />
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-24 items-center">
 
-      {/* DARK CINEMATIC OVERLAY */}
-      <div className="absolute inset-0 bg-black/70" />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/80 to-black/95" />
-
-      {/* PARTICLE GLOW */}
-      <div className="absolute inset-0 pointer-events-none">
-        {[...Array(25)].map((_, i) => (
-          <motion.span
-            key={i}
-            className="absolute w-1 h-1 rounded-full bg-amber-400/30"
-            initial={{
-              x: Math.random() * window.innerWidth,
-              y: window.innerHeight + 40,
-              opacity: 0,
-            }}
-            animate={{
-              y: -40,
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: Math.random() * 15 + 12,
-              repeat: Infinity,
-              delay: Math.random() * 5,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* CONTENT */}
-      <div className="relative z-10 h-full flex items-center">
-        <div className="max-w-6xl mx-auto px-6 text-center">
-
-          {/* BADGE */}
+          {/* IMAGE SIDE */}
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            className="mb-6"
+            ref={imageRef}
+            style={{ y: imageY, scale: imageScale, rotateY: imageRotate }}
+            className="relative transform-gpu"
           >
-            <span className="inline-block px-6 py-2 text-[11px] tracking-[0.35em] font-semibold text-amber-300 border border-amber-400/40 rounded-full bg-black/40 shadow-[0_0_25px_rgba(255,193,7,0.35)]">
-              WELCOME TO SAGOSERVE
-            </span>
+            <motion.div
+              initial={{ opacity: 0, x: -80, rotateY: 8 }}
+              animate={
+                isImageInView
+                  ? { opacity: 1, x: 0, rotateY: 0 }
+                  : { opacity: 0, x: -80, rotateY: 8 }
+              }
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+              className="relative rounded-3xl overflow-hidden"
+            >
+              <div className="bg-[#241a13] p-4 rounded-3xl shadow-[0_40px_90px_rgba(0,0,0,0.7)]">
+                <div className="relative rounded-2xl overflow-hidden">
+                  <motion.img
+                    src="/hero2.jpg"
+                    alt="Sago Excellence"
+                    className="w-full h-[450px] lg:h-[560px] object-cover"
+                    whileHover={{ scale: 1.04 }}
+                    transition={{ duration: 0.9, ease: "easeOut" }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                </div>
+              </div>
+
+              {/* 50+ BADGE */}
+              <motion.div
+                style={{ y: badgeY }}
+                initial={{ opacity: 0, y: 40 }}
+                animate={
+                  isImageInView
+                    ? { opacity: 1, y: 0 }
+                    : { opacity: 0, y: 40 }
+                }
+                transition={{ duration: 0.7, delay: 0.3 }}
+                className="absolute bottom-8 right-8 bg-[#1d1a16]/95 backdrop-blur-xl px-6 py-4 rounded-xl border border-[#3a2b1f]"
+              >
+                <p className="text-4xl font-bold text-[#C9A46A]">
+                  50<span>+</span>
+                </p>
+                <p className="text-white/60 text-sm mt-1">
+                  Years of Excellence
+                </p>
+              </motion.div>
+            </motion.div>
           </motion.div>
 
-          {/* TITLE */}
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.1, delay: 0.2 }}
-            className="text-[32px] md:text-[40px] lg:text-[46px] font-semibold text-white leading-tight"
-          >
-            Salem Starch and Sago Manufacturers’
-            <br />
-            <span className="block mt-2 text-[#C9A27A] font-bold">
-              Service Industrial Co-operative Society Ltd
-            </span>
-          </motion.h1>
-
-          {/* DESCRIPTION */}
+          {/* CONTENT SIDE */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 1 }}
-            className="mt-8 max-w-4xl mx-auto space-y-4 text-[16px] leading-[1.85] text-white/85"
+            ref={contentRef}
+            style={{ y: contentY }}
+            className="lg:pl-6 transform-gpu"
           >
-            <p className="text-white/95 leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
-  <span className="text-[#8B5E3C] font-semibold">SAGOSERVE</span> is a
-  cooperative society empowering starch and sago manufacturers of
-  Salem through a transparent, structured, member-focused ecosystem.
-</p>
+            {/* BADGE */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={
+                isContentInView
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 0, y: 20 }
+              }
+              transition={{ duration: 0.6 }}
+              className="mb-8"
+            >
+              <span className="inline-block px-5 py-2 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-300 text-sm font-medium">
+                Our Legacy
+              </span>
+            </motion.div>
 
-<p className="text-white/95 leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
-  Founded in{" "}
-  <span className="text-[#8B5E3C] font-semibold">1981</span>, the society
-  emerged during a time of unfair pricing, limited institutional credit,
-  and heavy dependency on intermediaries.
-</p>
+            {/* TITLE */}
+            <motion.h2
+              initial={{ opacity: 0, y: 50 }}
+              animate={
+                isContentInView
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 0, y: 50 }
+              }
+              transition={{ duration: 0.9, delay: 0.1 }}
+              className="font-serif text-4xl sm:text-5xl lg:text-6xl text-white leading-[1.15] mb-8"
+            >
+              Excellence
+              <span className="block text-[#C9A46A] mt-1">
+                in Every Grain
+              </span>
+            </motion.h2>
 
-<p className="text-white/95 leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
-  Registered on{" "}
-  <span className="text-[#8B5E3C] font-semibold">July 21, 1981</span> and
-  commencing operations on{" "}
-  <span className="text-[#8B5E3C] font-semibold">
-    February 27, 1982
-  </span>
-  , SAGOSERVE has grown into a trusted pillar of progress.
-</p>
+            {/* DESCRIPTION */}
+            <motion.p
+              initial={{ opacity: 0, y: 40 }}
+              animate={
+                isContentInView
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 0, y: 40 }
+              }
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-white/60 text-base lg:text-lg leading-relaxed mb-10 max-w-lg"
+            >
+              For over five decades, we have been at the forefront of the tapioca
+              industry, delivering premium quality products that meet the highest
+              standards of purity and taste.
+            </motion.p>
 
-          </motion.div>
+            {/* STATS */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={
+                isContentInView
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 0, y: 30 }
+              }
+              transition={{ duration: 0.7, delay: 0.3 }}
+              className="flex gap-4 mb-10"
+            >
+              {[["50+", "Years Experience"], ["100%", "Quality Assured"]].map(
+                ([value, label]) => (
+                  <motion.div
+                    key={label}
+                    whileHover={{ y: -6 }}
+                    transition={{ duration: 0.4 }}
+                    className="flex-1 bg-[#1b1b1b] rounded-2xl p-6 border border-[#2f2f2f] relative overflow-hidden"
+                  >
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-[#C9A46A]/10 rounded-full blur-3xl" />
+                    <p className="text-4xl lg:text-5xl font-bold text-white mb-2">
+                      {value.replace("+", "")}
+                      <span className="text-[#C9A46A]">
+                        {value.includes("+") ? "+" : "%"}
+                      </span>
+                    </p>
+                    <p className="text-white/50 text-sm">{label}</p>
+                  </motion.div>
+                )
+              )}
+            </motion.div>
 
-          {/* STATS */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 1 }}
-            className="mt-14 grid grid-cols-1 sm:grid-cols-2 gap-10 max-w-4xl mx-auto"
-          >
-
-            {/* LEFT CARD – BLUE */}
-            <div className="relative rounded-2xl border border-blue-400/40 bg-black/40 backdrop-blur-md px-8 py-6 shadow-[0_0_35px_rgba(59,130,246,0.45)]">
-              <p className="text-[36px] font-bold text-blue-300">
-                28.61{" "}
-                <span className="text-sm font-medium text-white/60">Million</span>
-              </p>
-              <p className="mt-1 text-white font-medium">
-                Inward Bags Handled
-              </p>
-              <p className="mt-1 text-sm text-white/60">
-                Since 2003 across sago, starch and broken sago
-              </p>
-            </div>
-
-            {/* RIGHT CARD – GOLD */}
-           <div
-  className="
-    relative rounded-2xl
-    border border-[#8B5E3C]/60
-    bg-black/45 backdrop-blur-md
-    px-8 py-6
-
-    shadow-[0_0_45px_rgba(139,94,60,0.6)]
-  "
->
-
-              <p className="text-[36px] font-bold text-amber-300">
-                27.48{" "}
-                <span className="text-sm font-medium text-white/60">Million</span>
-              </p>
-              <p className="mt-1 text-white font-medium">
-                Bags Invoiced
-              </p>
-              <p className="mt-1 text-sm text-white/60">
-                Demonstrating efficiency and operational scale
-              </p>
-            </div>
-
+            {/* CTA */}
+            <motion.button
+              initial={{ opacity: 0, y: 20 }}
+              animate={
+                isContentInView
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 0, y: 20 }
+              }
+              transition={{ duration: 0.6, delay: 0.4 }}
+              whileHover={{ y: -4 }}
+              whileTap={{ scale: 0.97 }}
+              className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold rounded-xl shadow-[0_20px_45px_rgba(0,0,0,0.45)]"
+            >
+              Discover Our Story
+            </motion.button>
           </motion.div>
         </div>
       </div>
-
-      {/* BOTTOM FADE */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent" />
     </section>
   );
 }
