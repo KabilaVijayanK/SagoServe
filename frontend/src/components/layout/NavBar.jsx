@@ -84,11 +84,11 @@ export default function Navbar() {
                 hidden sm:inline-flex items-center gap-1.5
                 px-4 py-2 rounded-md text-sm font-semibold
                 bg-[#7fdca3] text-black
-                hover:bg-[#6fcf95]
+                hover:bg-gradient-to-r from-[#7A5C2E] to-[#8C6A36]
                 transition
               "
             >
-              Enquiry
+              Enquiry Now
               <ArrowUpRight className="w-4 h-4" />
             </NavLink>
 
@@ -129,7 +129,7 @@ export default function Navbar() {
             to="/contact"
             className="inline-flex items-center gap-2 mt-3 text-sm font-semibold text-black"
           >
-            Talk to us <ArrowUpRight className="w-4 h-4" />
+           Enquiry Now <ArrowUpRight className="w-4 h-4" />
           </NavLink>
         </div>
       </motion.div>

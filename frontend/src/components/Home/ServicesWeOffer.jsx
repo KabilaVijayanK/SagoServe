@@ -42,130 +42,197 @@ const services = [
   },
 ];
 
+const marqueeTexts = [
+  "Understanding the Cooperative Framework",
+  "Transparent Marketing & Member Support",
+  "Supporting Members Across the Value Chain",
+  "Your Growth Journey",
+  "Sustainable Growth Through Cooperation",
+];
+
 export default function ServicesWeOffer() {
   const sectionRef = useRef(null);
   const titleRef = useRef(null);
 
-  const isTitleInView = useInView(titleRef, { once: false, margin: "-20%" });
+  const isTitleInView = useInView(titleRef, { once: false, margin: "-15%" });
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
   });
 
-  /* 🔥 SCROLL DEPTH */
-  const sectionZ = useTransform(scrollYProgress, [0, 1], [0, -300]);
-  const cardsY = useTransform(scrollYProgress, [0, 1], [120, -120]);
+  /* 🔥 PREMIUM PARALLAX TRANSFORMS */
+  const bgY = useTransform(scrollYProgress, [0, 1], [0, -150]);
+  const cardsY = useTransform(scrollYProgress, [0, 1], [150, -80]);
+  const orb1Y = useTransform(scrollYProgress, [0, 1], [0, -200]);
+  const orb2Y = useTransform(scrollYProgress, [0, 1], [0, 150]);
+  const headerOpacity = useTransform(scrollYProgress, [0, 0.15, 0.8, 1], [0.3, 1, 1, 0.3]);
 
   return (
     <section
       ref={sectionRef}
-      className="relative bg-[#080808] py-28 lg:py-40 overflow-hidden"
-      style={{ perspective: "1600px" }}
+      className="relative bg-[#050505] py-32 lg:py-44 overflow-hidden"
+      style={{ perspective: "1800px" }}
     >
-      {/* BACKGROUND ATMOSPHERE */}
+      {/* PREMIUM BACKGROUND ATMOSPHERE */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[900px] bg-blue-500/10 rounded-full blur-[160px]" />
-        <div className="absolute bottom-0 right-0 w-[700px] h-[700px] bg-[#8B5E3C]/15 rounded-full blur-[180px]" />
+        <motion.div 
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[1000px] bg-blue-500/8 rounded-full blur-[200px]" 
+          style={{ y: orb1Y }}
+        />
+        <motion.div 
+          className="absolute bottom-0 right-0 w-[800px] h-[800px] bg-amber-500/10 rounded-full blur-[200px]" 
+          style={{ y: orb2Y }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/50" />
+        
+        {/* Subtle grid */}
+        <div 
+          className="absolute inset-0 opacity-[0.015]"
+          style={{
+            backgroundImage: "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
+            backgroundSize: "80px 80px",
+          }}
+        />
       </div>
 
-      {/* HEADER */}
+      {/* HEADER - Smooth Reveal */}
       <motion.div
         ref={titleRef}
-        initial={{ opacity: 0, y: 80, rotateX: 18 }}
+        style={{ opacity: headerOpacity }}
+        initial={{ opacity: 0, y: 100, rotateX: 20 }}
         animate={
           isTitleInView
             ? { opacity: 1, y: 0, rotateX: 0 }
-            : { opacity: 0, y: 80, rotateX: 18 }
+            : { opacity: 0, y: 100, rotateX: 20 }
         }
-        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-10 text-center mb-24"
+        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+        className="relative z-10 text-center mb-28"
       >
-        <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-white mb-6">
-          Services <span className="text-[#8B5E3C]">We Offer</span>
+        <motion.span
+          initial={{ opacity: 0, y: 20 }}
+          animate={isTitleInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="inline-block px-5 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-sm font-medium tracking-wide mb-6"
+        >
+          What We Provide
+        </motion.span>
+        
+        <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-white mb-6">
+          Services <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">We Offer</span>
         </h2>
-        <p className="text-white/60 max-w-2xl mx-auto text-lg">
+        <p className="text-white/50 max-w-2xl mx-auto text-lg leading-relaxed">
           Comprehensive services designed to support farmers and enhance the quality of tapioca production.
         </p>
       </motion.div>
 
-      {/* 3D STACK */}
+      {/* 3D CARDS GRID - Premium Parallax */}
       <motion.div
-        style={{ y: cardsY, translateZ: sectionZ }}
-        className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 px-6"
+        style={{ y: cardsY }}
+        className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 px-6"
       >
         {services.map((service, index) => {
           const Icon = service.icon;
           return (
             <motion.div
               key={service.title}
-              initial={{ opacity: 0, y: 120, rotateX: 25 }}
-              whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-              viewport={{ once: true, margin: "-120px" }}
+              initial={{ opacity: 0, y: 120, rotateX: 25, scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
+              viewport={{ once: false, margin: "-80px" }}
               transition={{
-                duration: 0.9,
-                delay: index * 0.08,
+                duration: 1,
+                delay: index * 0.1,
                 ease: [0.22, 1, 0.36, 1],
               }}
               style={{ transformStyle: "preserve-3d" }}
-              className="relative"
+              className="group"
             >
               <motion.div
                 whileHover={{
-                  y: -18,
-                  rotateX: -8,
-                  rotateY: index % 2 === 0 ? 8 : -8,
+                  y: -20,
+                  rotateX: -6,
+                  rotateY: index % 2 === 0 ? 6 : -6,
+                  scale: 1.02,
                 }}
-                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                className="
-                  relative h-full
-                  bg-[#111]
-                  rounded-3xl
-                  p-10
-                  border border-[#222]
-                  shadow-[0_60px_120px_rgba(0,0,0,0.75)]
-                  overflow-hidden
-                "
-                style={{ transformStyle: "preserve-3d" }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="relative h-full bg-gradient-to-br from-[#111] to-[#0a0a0a] rounded-3xl p-10 border border-white/5 overflow-hidden"
+                style={{ 
+                  transformStyle: "preserve-3d",
+                  boxShadow: "0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.03)",
+                }}
               >
-                {/* DEPTH LAYER */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#8B5E3C]/0 to-blue-500/0 hover:from-[#8B5E3C]/15 hover:to-blue-500/15 transition-all duration-500 rounded-3xl" />
+                {/* Hover Glow Effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/0 via-transparent to-blue-500/0 group-hover:from-amber-500/10 group-hover:to-blue-500/5 transition-all duration-700 rounded-3xl" />
+                
+                {/* Spotlight Effect */}
+                <div className="absolute -top-20 -right-20 w-40 h-40 bg-amber-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                {/* ICON */}
+                {/* ICON with 3D depth */}
                 <div
-                  className="w-16 h-16 rounded-2xl bg-[#8B5E3C]/20 flex items-center justify-center mb-8"
-                  style={{ transform: "translateZ(40px)" }}
+                  className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500/20 to-amber-600/10 flex items-center justify-center mb-8 border border-amber-500/20 group-hover:border-amber-500/40 transition-colors duration-300"
+                  style={{ transform: "translateZ(50px)" }}
                 >
-                  <Icon className="w-8 h-8 text-[#C9A27A]" />
+                  <Icon className="w-8 h-8 text-amber-400 group-hover:text-amber-300 transition-colors" />
                 </div>
 
                 {/* TITLE */}
                 <h3
-                  className="text-2xl font-semibold text-white mb-4"
-                  style={{ transform: "translateZ(30px)" }}
+                  className="text-2xl font-semibold text-white mb-4 group-hover:text-amber-50 transition-colors"
+                  style={{ transform: "translateZ(40px)" }}
                 >
                   {service.title}
                 </h3>
 
                 {/* DESC */}
                 <p
-                  className="text-white/60 text-base leading-relaxed"
-                  style={{ transform: "translateZ(22px)" }}
+                  className="text-white/50 text-base leading-relaxed group-hover:text-white/70 transition-colors"
+                  style={{ transform: "translateZ(30px)" }}
                 >
                   {service.desc}
                 </p>
 
-                {/* EDGE LINE */}
-                <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#8B5E3C] to-blue-500 scale-x-0 hover:scale-x-100 transition-transform duration-500 origin-left" />
+                {/* Bottom gradient line */}
+                <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-amber-500/50 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
               </motion.div>
             </motion.div>
           );
         })}
       </motion.div>
 
+      {/* MARQUEE STRIP */}
+      <div className="relative mt-32 overflow-hidden select-none">
+        <div className="marquee-track">
+          {[...marqueeTexts, ...marqueeTexts].map((text, i) => (
+            <span
+              key={i}
+              className="marquee-item text-amber-400/80 font-medium text-lg"
+            >
+              <span className="mx-4 text-amber-600">✦</span>
+              {text}
+            </span>
+          ))}
+        </div>
+      </div>
+
       {/* FADE EDGES */}
-      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#080808] to-transparent pointer-events-none" />
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#080808] to-transparent pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#050505] to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#050505] to-transparent pointer-events-none" />
+      
+      <style>{`
+        .marquee-track {
+          display: flex;
+          animation: marquee 40s linear infinite;
+          white-space: nowrap;
+        }
+        .marquee-item {
+          flex-shrink: 0;
+          padding: 0 1rem;
+        }
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+      `}</style>
     </section>
   );
 }

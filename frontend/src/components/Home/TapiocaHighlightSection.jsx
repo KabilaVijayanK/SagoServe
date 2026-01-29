@@ -103,7 +103,7 @@ export default function TapiocaHighlightSection() {
             initial={{ opacity: 0, y: 50 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
             transition={{ duration: 0.8, delay: 0.15, ease: "easeOut" }}
-            className="font-serif text-white font-bold leading-[1.15] text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4rem]"
+            className="font-serif text-white font-bold leading-[1.15] text-2xl sm:text-3xl md:text-4xl lg:text-5xl"
           >
             At the heart of our
             <br className="hidden sm:block" />
