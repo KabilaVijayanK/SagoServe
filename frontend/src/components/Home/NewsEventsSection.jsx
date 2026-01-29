@@ -206,37 +206,13 @@ export default function NewsEventsSection() {
       />
 
       {/* Grid pattern overlay */}
-      <motion.div 
-        className="absolute inset-0 opacity-[0.03] pointer-events-none"
+      <div 
+        className="absolute inset-0 opacity-[0.02] pointer-events-none"
         style={{ 
-          y: bgY,
           backgroundImage: `linear-gradient(#E07B4C 1px, transparent 1px), linear-gradient(90deg, #E07B4C 1px, transparent 1px)`,
           backgroundSize: '60px 60px'
         }}
       />
-
-      {/* Floating particles */}
-      {[...Array(6)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 bg-[#E07B4C]/40 rounded-full pointer-events-none"
-          style={{
-            left: `${15 + i * 15}%`,
-            top: `${20 + (i % 3) * 25}%`,
-          }}
-          animate={{
-            y: [-20, 20, -20],
-            opacity: [0.2, 0.6, 0.2],
-            scale: [1, 1.5, 1],
-          }}
-          transition={{
-            duration: 4 + i,
-            repeat: Infinity,
-            delay: i * 0.5,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
         

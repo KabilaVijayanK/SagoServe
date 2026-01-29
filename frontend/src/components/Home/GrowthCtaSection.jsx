@@ -3,205 +3,184 @@ import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 
 export default function GrowthCtaSection() {
-  const sectionRef = useRef(null);
+  const ref = useRef(null);
   const contentRef = useRef(null);
-  const contentInView = useInView(contentRef, { once: false, margin: "-20%" });
+
+  const inView = useInView(contentRef, { margin: "-20%" });
 
   const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
+    target: ref,
+    offset: ["start end","end start"]
   });
 
-  /* 🔥 ULTRA SMOOTH PARALLAX */
-  const bgY = useTransform(scrollYProgress, [0, 1], [0, -200]);
-  const bgScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.2, 1.1, 1]);
-  const glowY = useTransform(scrollYProgress, [0, 1], [80, -120]);
-  const contentY = useTransform(scrollYProgress, [0, 0.5], [100, 0]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.3], [0, 1]);
-  const overlayOpacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.5, 0.7, 0.7, 0.8]);
+  /* 🎬 CINEMATIC PARALLAX */
+  const bgY = useTransform(scrollYProgress,[0,1],[0,-250]);
+  const bgScale = useTransform(scrollYProgress,[0,1],[1.4,1]);
+  const textY = useTransform(scrollYProgress,[0,.4],[120,0]);
+  const opacity = useTransform(scrollYProgress,[0,.3],[0,1]);
+  const glowY = useTransform(scrollYProgress,[0,1],[100,-150]);
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative min-h-screen w-full overflow-hidden"
-      style={{ perspective: "1600px" }}
-    >
-      {/* BACKGROUND IMAGE – ULTRA PARALLAX */}
+    <section ref={ref} className="relative h-[120vh] overflow-hidden bg-black">
+
+      {/* 🎥 PARALLAX BACKGROUND */}
       <motion.div
-        style={{ y: bgY, scale: bgScale }}
+        style={{ y:bgY, scale:bgScale }}
         className="absolute inset-0"
       >
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/hero1.jpg')" }}
+        <img
+          src="/hero1.jpg"
+          className="w-full h-full object-cover"
+          alt=""
         />
       </motion.div>
 
-      {/* CINEMATIC OVERLAYS */}
-      <motion.div 
-        style={{ opacity: overlayOpacity }}
-        className="absolute inset-0 bg-black" 
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/30" />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#030303] via-transparent to-[#030303]" />
+      {/* DARK CINEMATIC OVERLAYS */}
+      <div className="absolute inset-0 bg-black/60"/>
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"/>
+      <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black"/>
 
-      {/* PREMIUM GOLD GLOW – PARALLAX */}
+      {/* GOLD GLOW PARALLAX */}
       <motion.div
-        style={{ y: glowY }}
-        className="absolute bottom-[-300px] right-[-200px] w-[900px] h-[900px]
-        bg-[radial-gradient(circle,_rgba(218,165,32,0.25)_0%,_rgba(184,134,11,0.1)_40%,_transparent_70%)]
-        blur-[150px]"
-      />
-      <motion.div
-        style={{ y: useTransform(scrollYProgress, [0, 1], [0, -80]) }}
-        className="absolute top-[-200px] left-[-200px] w-[600px] h-[600px]
-        bg-[radial-gradient(circle,_rgba(139,90,43,0.15)_0%,_transparent_60%)]
-        blur-[120px]"
+        style={{ y:glowY }}
+        className="absolute -bottom-40 right-[-10%] w-[900px] h-[900px]
+        bg-[radial-gradient(circle,rgba(212,175,55,0.25)_0%,transparent_60%)]
+        blur-[140px]"
       />
 
-      {/* SUBTLE PARTICLES – ENHANCED */}
-      {[...Array(12)].map((_, i) => (
-        <motion.span
+      {/* FLOATING PARTICLES */}
+      {[...Array(10)].map((_,i)=>(
+        <motion.div
           key={i}
-          className="absolute w-1 h-1 rounded-full bg-amber-400/30"
+          className="absolute w-2 h-2 bg-amber-400/40 rounded-full"
           style={{
-            left: `${8 + i * 8}%`,
-            top: `${15 + (i % 4) * 20}%`,
+            top:`${10+i*8}%`,
+            left:`${5+i*9}%`
           }}
           animate={{
-            y: [-30, 30, -30],
-            x: [0, 10, 0],
-            opacity: [0.1, 0.5, 0.1],
-            scale: [0.8, 1.2, 0.8],
+            y:[0,-40,0],
+            opacity:[.2,1,.2]
           }}
           transition={{
-            duration: 6 + i * 0.5,
-            repeat: Infinity,
-            ease: "easeInOut",
+            duration:6+i,
+            repeat:Infinity
           }}
         />
       ))}
 
-      {/* Grid overlay */}
-      <div 
-        className="absolute inset-0 opacity-[0.02]"
+      {/* GRID TEXTURE */}
+      <div
+        className="absolute inset-0 opacity-[0.03]"
         style={{
-          backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`,
-          backgroundSize: '80px 80px'
+          backgroundImage:
+          "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg,#fff 1px, transparent 1px)",
+          backgroundSize:"100px 100px"
         }}
       />
 
-      {/* CONTENT */}
+      {/* 🎯 CONTENT */}
       <motion.div
         ref={contentRef}
-        style={{ y: contentY, opacity: contentOpacity }}
-        className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8
-        min-h-screen flex flex-col items-center justify-center text-center"
+        style={{ y:textY, opacity }}
+        className="relative z-10 h-screen flex flex-col items-center justify-center text-center px-6"
       >
+
         {/* BADGE */}
         <motion.div
-          initial={{ opacity: 0, y: 30, scale: 0.9 }}
-          animate={contentInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-          transition={{ duration: 0.8 }}
-          className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 mb-8"
+          initial={{ opacity:0, y:30 }}
+          animate={inView && { opacity:1, y:0 }}
+          className="flex items-center gap-2 px-6 py-2
+          bg-amber-500/10 border border-amber-500/30
+          rounded-full mb-10"
         >
-          <Sparkles className="w-4 h-4 text-amber-400" />
-          <span className="text-xs tracking-[0.3em] text-amber-400 font-medium">JOIN THE MOVEMENT</span>
+          <Sparkles className="w-4 h-4 text-amber-400"/>
+          <span className="text-amber-400 text-xs tracking-[0.3em]">
+            GROW WITH SAGOSERVE
+          </span>
         </motion.div>
 
-        {/* HEADING - CINEMATIC REVEAL */}
+        {/* HEADLINE */}
         <motion.h1
-          initial={{ opacity: 0, y: 80, rotateX: 15 }}
-          animate={contentInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
-          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-          className="text-3xl md:text-5xl lg:text-6xl font-bold leading-[0.95] text-white tracking-tight"
+          initial={{ opacity:0, y:60 }}
+          animate={inView && { opacity:1, y:0 }}
+          transition={{ duration:1 }}
+          className="text-4xl md:text-6xl lg:text-7xl
+          font-bold text-white leading-tight"
         >
-          STOP COMPROMISING.
-          <br />
-          <motion.span 
-            initial={{ opacity: 0, y: 40 }}
-            animate={contentInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 1, delay: 0.3 }}
-            className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500"
-          >
+        STOP COMPROMISING.
+          <br/>
+          <span className="text-transparent bg-clip-text
+          bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500">
             START SAGOSERVE.
-          </motion.span>
+          </span>
         </motion.h1>
 
-        {/* DESCRIPTION */}
+        {/* SUBTEXT */}
         <motion.p
-          initial={{ opacity: 0, y: 50 }}
-          animate={contentInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.9, delay: 0.4 }}
-          className="mt-8 max-w-2xl text-lg md:text-xl text-white/60 leading-relaxed"
+          initial={{ opacity:0, y:40 }}
+          animate={inView && { opacity:1, y:0 }}
+          transition={{ delay:.3 }}
+          className="mt-8 max-w-2xl text-white/60 text-lg"
         >
-          Experience the difference of working with a cooperative
-          that puts quality and community first.
+          Join the most trusted cooperative platform in the sago
+          and starch industry. Transparency, trust and technology —
+          all in one ecosystem.
         </motion.p>
 
-        {/* CTA BUTTONS */}
+        {/* BUTTONS */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={contentInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="mt-14 flex flex-wrap justify-center gap-6"
+          initial={{ opacity:0, y:40 }}
+          animate={inView && { opacity:1, y:0 }}
+          transition={{ delay:.5 }}
+          className="flex gap-6 mt-14"
         >
+
           {/* PRIMARY */}
-          <motion.a
+          <a
             href="/registration"
-            whileHover={{ scale: 1.05, y: -3 }}
-            whileTap={{ scale: 0.98 }}
-            className="group relative px-10 py-5 overflow-hidden rounded-xl"
+            className="group relative px-10 py-5 rounded-xl
+            bg-gradient-to-r from-amber-600 to-amber-700
+            text-white font-semibold overflow-hidden"
           >
-            {/* Button BG */}
-            <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl" />
-            <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            
-            {/* Shine effect */}
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-            </div>
-            
-            <span className="relative z-10 flex items-center gap-3 text-white font-semibold tracking-wide">
-              BECOME A MEMBER
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <span className="flex items-center gap-3">
+              Get Started
+              <ArrowRight className="group-hover:translate-x-1 transition"/>
             </span>
-          </motion.a>
+
+            {/* shine */}
+            <div className="absolute inset-0 bg-gradient-to-r
+            from-transparent via-white/20 to-transparent
+            -translate-x-full group-hover:translate-x-full
+            transition duration-700"/>
+          </a>
 
           {/* SECONDARY */}
-          <motion.a
+          <a
             href="/contact"
-            whileHover={{ scale: 1.05, y: -3 }}
-            whileTap={{ scale: 0.98 }}
-            className="group relative px-10 py-5 overflow-hidden rounded-xl border border-white/20 hover:border-white/40 transition-colors"
+            className="px-10 py-5 rounded-xl border border-white/30
+            text-white hover:bg-white/10 transition"
           >
-            <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-colors rounded-xl" />
-            <span className="relative z-10 flex items-center gap-3 text-white font-semibold tracking-wide">
-              CONTACT US
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </span>
-          </motion.a>
+            Talk to Us
+          </a>
         </motion.div>
 
-        {/* TRUST INDICATORS */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={contentInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.7 }}
-          className="mt-16 flex flex-wrap justify-center gap-8 text-white/30 text-sm"
-        >
-          {["Transparent Pricing", "Government Regulated", "1000+ Members"].map((item, i) => (
-            <div key={i} className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-amber-500/50" />
-              <span>{item}</span>
-            </div>
+        {/* TRUST LINE */}
+        <div className="flex gap-10 mt-16 text-white/40 text-sm">
+          {["Govt Regulated","Transparent Pricing","1000+ Members"]
+            .map((t,i)=>(
+              <div key={i} className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 bg-amber-400 rounded-full"/>
+                {t}
+              </div>
           ))}
-        </motion.div>
+        </div>
+
       </motion.div>
 
       {/* FADE EDGES */}
-      <div className="absolute top-0 left-0 right-0 h-48 bg-gradient-to-b from-[#030303] to-transparent pointer-events-none" />
-      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#030303] to-transparent pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-black to-transparent"/>
+      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-black to-transparent"/>
+
     </section>
   );
 }

@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import React from "react";
+import { motion } from "framer-motion";
 import {
   Settings,
   FlaskConical,
@@ -22,215 +22,141 @@ const services = [
   },
   {
     title: "Website",
-    desc: "Online platform for members to access services, information, and digital tools for SAGOSERVE.",
+    desc: "Online platform for members to access services, information, and digital tools.",
     icon: Globe,
   },
   {
     title: "Workshops",
-    desc: "Regular training workshops for farmers and members on best practices and new techniques.",
+    desc: "Regular training workshops for farmers on best practices and new techniques.",
     icon: Video,
   },
   {
     title: "Stores",
-    desc: "Well-stocked stores providing essential supplies and materials for tapioca farming and processing.",
+    desc: "Well-stocked stores providing essential supplies and materials.",
     icon: Layers,
   },
   {
     title: "Programs",
-    desc: "Various programs and initiatives to support farmers and enhance productivity.",
+    desc: "Initiatives designed to support farmers and increase productivity.",
     icon: Users,
   },
 ];
 
 const marqueeTexts = [
   "Understanding the Cooperative Framework",
-  "Transparent Marketing & Member Support",
+  "Transparent Marketing",
   "Supporting Members Across the Value Chain",
   "Your Growth Journey",
-  "Sustainable Growth Through Cooperation",
+  "Sustainable Growth",
 ];
 
 export default function ServicesWeOffer() {
-  const sectionRef = useRef(null);
-  const titleRef = useRef(null);
-
-  const isTitleInView = useInView(titleRef, { once: false, margin: "-15%" });
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-
-  /* 🔥 PREMIUM PARALLAX TRANSFORMS */
-  const bgY = useTransform(scrollYProgress, [0, 1], [0, -150]);
-  const cardsY = useTransform(scrollYProgress, [0, 1], [150, -80]);
-  const orb1Y = useTransform(scrollYProgress, [0, 1], [0, -200]);
-  const orb2Y = useTransform(scrollYProgress, [0, 1], [0, 150]);
-  const headerOpacity = useTransform(scrollYProgress, [0, 0.15, 0.8, 1], [0.3, 1, 1, 0.3]);
-
   return (
-    <section
-      ref={sectionRef}
-      className="relative bg-[#050505] py-32 lg:py-44 overflow-hidden"
-      style={{ perspective: "1800px" }}
-    >
-      {/* PREMIUM BACKGROUND ATMOSPHERE */}
-      <div className="absolute inset-0 pointer-events-none">
-        <motion.div 
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[1000px] bg-blue-500/8 rounded-full blur-[200px]" 
-          style={{ y: orb1Y }}
-        />
-        <motion.div 
-          className="absolute bottom-0 right-0 w-[800px] h-[800px] bg-amber-500/10 rounded-full blur-[200px]" 
-          style={{ y: orb2Y }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/50" />
-        
-        {/* Subtle grid */}
-        <div 
-          className="absolute inset-0 opacity-[0.015]"
-          style={{
-            backgroundImage: "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
-            backgroundSize: "80px 80px",
-          }}
-        />
-      </div>
+    <section className="relative bg-[#050505] py-32 overflow-hidden">
 
-      {/* HEADER - Smooth Reveal */}
+      {/* CINEMATIC BACKGROUND GLOW */}
+      <div className="absolute -top-40 -left-40 w-[600px] h-[600px] bg-amber-500/10 blur-[160px] rounded-full"/>
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-amber-700/10 blur-[140px] rounded-full"/>
+
+      {/* HEADER */}
       <motion.div
-        ref={titleRef}
-        style={{ opacity: headerOpacity }}
-        initial={{ opacity: 0, y: 100, rotateX: 20 }}
-        animate={
-          isTitleInView
-            ? { opacity: 1, y: 0, rotateX: 0 }
-            : { opacity: 0, y: 100, rotateX: 20 }
-        }
-        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-10 text-center mb-28"
+        initial={{ opacity: 0, y: 60 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        className="text-center mb-24 px-6 relative z-10"
       >
-        <motion.span
-          initial={{ opacity: 0, y: 20 }}
-          animate={isTitleInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="inline-block px-5 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-sm font-medium tracking-wide mb-6"
-        >
-          What We Provide
-        </motion.span>
-        
-        <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-white mb-6">
-          Services <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">We Offer</span>
+        <span className="px-6 py-2 bg-amber-500/10 border border-amber-500/30 text-amber-400 rounded-full text-sm tracking-wider">
+          WHAT WE PROVIDE
+        </span>
+
+        <h2 className="text-4xl lg:text-6xl text-white font-serif mt-8 leading-tight">
+          Services{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-600">
+            We Offer
+          </span>
         </h2>
-        <p className="text-white/50 max-w-2xl mx-auto text-lg leading-relaxed">
-          Comprehensive services designed to support farmers and enhance the quality of tapioca production.
+
+        <p className="text-white/40 max-w-2xl mx-auto mt-6 text-lg">
+          Premium cooperative services crafted for quality,
+          transparency and farmer success.
         </p>
       </motion.div>
 
-      {/* 3D CARDS GRID - Premium Parallax */}
-      <motion.div
-        style={{ y: cardsY }}
-        className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 px-6"
-      >
-        {services.map((service, index) => {
+      {/* CARDS */}
+      <div className="max-w-7xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-12 px-6 relative z-10">
+        {services.map((service, i) => {
           const Icon = service.icon;
+
           return (
             <motion.div
               key={service.title}
-              initial={{ opacity: 0, y: 120, rotateX: 25, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
-              viewport={{ once: false, margin: "-80px" }}
+              initial={{ opacity: 0, y: 100, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
               transition={{
-                duration: 1,
-                delay: index * 0.1,
+                duration: 0.9,
+                delay: i * 0.12,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              style={{ transformStyle: "preserve-3d" }}
-              className="group"
+              whileHover={{ y: -18, scale: 1.02 }}
+              className="
+                group relative
+                bg-white/5 backdrop-blur-xl
+                border border-white/10
+                hover:border-amber-400/40
+                rounded-3xl p-10
+                transition-all duration-500
+                overflow-hidden
+              "
             >
+              {/* hover glow */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-br from-amber-500/15 to-transparent transition duration-500"/>
+
+              {/* icon */}
               <motion.div
-                whileHover={{
-                  y: -20,
-                  rotateX: -6,
-                  rotateY: index % 2 === 0 ? 6 : -6,
-                  scale: 1.02,
-                }}
-                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="relative h-full bg-gradient-to-br from-[#111] to-[#0a0a0a] rounded-3xl p-10 border border-white/5 overflow-hidden"
-                style={{ 
-                  transformStyle: "preserve-3d",
-                  boxShadow: "0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.03)",
-                }}
+                whileHover={{ rotate: 15, scale: 1.2 }}
+                className="
+                  w-16 h-16 mb-6
+                  bg-amber-500/10
+                  rounded-2xl
+                  flex items-center justify-center
+                  group-hover:bg-amber-500/20
+                  transition
+                "
               >
-                {/* Hover Glow Effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/0 via-transparent to-blue-500/0 group-hover:from-amber-500/10 group-hover:to-blue-500/5 transition-all duration-700 rounded-3xl" />
-                
-                {/* Spotlight Effect */}
-                <div className="absolute -top-20 -right-20 w-40 h-40 bg-amber-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                {/* ICON with 3D depth */}
-                <div
-                  className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500/20 to-amber-600/10 flex items-center justify-center mb-8 border border-amber-500/20 group-hover:border-amber-500/40 transition-colors duration-300"
-                  style={{ transform: "translateZ(50px)" }}
-                >
-                  <Icon className="w-8 h-8 text-amber-400 group-hover:text-amber-300 transition-colors" />
-                </div>
-
-                {/* TITLE */}
-                <h3
-                  className="text-2xl font-semibold text-white mb-4 group-hover:text-amber-50 transition-colors"
-                  style={{ transform: "translateZ(40px)" }}
-                >
-                  {service.title}
-                </h3>
-
-                {/* DESC */}
-                <p
-                  className="text-white/50 text-base leading-relaxed group-hover:text-white/70 transition-colors"
-                  style={{ transform: "translateZ(30px)" }}
-                >
-                  {service.desc}
-                </p>
-
-                {/* Bottom gradient line */}
-                <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-amber-500/50 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+                <Icon size={30} className="text-amber-450 text-amber-400"/>
               </motion.div>
+
+              <h3 className="text-2xl text-white font-semibold mb-4">
+                {service.title}
+              </h3>
+
+              <p className="text-white/45 leading-relaxed">
+                {service.desc}
+              </p>
             </motion.div>
           );
         })}
-      </motion.div>
+      </div>
 
-      {/* MARQUEE STRIP */}
-      <div className="relative mt-32 overflow-hidden select-none">
-        <div className="marquee-track">
+      {/* PREMIUM MARQUEE */}
+      <div className="mt-28 border-y border-white/10 py-8">
+        <div className="flex whitespace-nowrap animate-marquee gap-16 text-amber-400/80 text-xl font-medium">
           {[...marqueeTexts, ...marqueeTexts].map((text, i) => (
-            <span
-              key={i}
-              className="marquee-item text-amber-400/80 font-medium text-lg"
-            >
-              <span className="mx-4 text-amber-600">✦</span>
+            <span key={i} className="flex items-center gap-6">
+              <span className="text-amber-600 text-2xl">✦</span>
               {text}
             </span>
           ))}
         </div>
       </div>
 
-      {/* FADE EDGES */}
-      <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#050505] to-transparent pointer-events-none" />
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#050505] to-transparent pointer-events-none" />
-      
       <style>{`
-        .marquee-track {
-          display: flex;
-          animation: marquee 40s linear infinite;
-          white-space: nowrap;
-        }
-        .marquee-item {
-          flex-shrink: 0;
-          padding: 0 1rem;
+        .animate-marquee {
+          animation: marquee 28s linear infinite;
         }
         @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
         }
       `}</style>
     </section>

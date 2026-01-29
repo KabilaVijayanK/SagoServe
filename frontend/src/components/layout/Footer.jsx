@@ -8,16 +8,15 @@ import {
   MapPin,
   Phone,
   Mail,
+  ArrowUpRight,
 } from "lucide-react";
 
 const Footer = () => {
   const footerRef = useRef(null);
   const [visible, setVisible] = useState(false);
 
-  // 🔥 Scroll to top function
-  const scrollToTop = () => {
+  const scrollToTop = () =>
     window.scrollTo({ top: 0, behavior: "smooth" });
-  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -36,84 +35,102 @@ const Footer = () => {
 
   return (
     <footer
-  ref={footerRef}
-  className={`bg-gradient-to-b from-slate-900 to-slate-950 text-slate-300
-    transition-all duration-700 ease-out
-    ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"}
-  `}
->
+      ref={footerRef}
+      className={`
+        relative overflow-hidden
+        bg-[#050505] text-white/70
+        transition-all duration-700
+        ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"}
+      `}
+    >
+      {/* CINEMATIC GLOW BG */}
+      <div className="absolute -top-40 left-0 w-[500px] h-[500px] bg-green-600/10 blur-[160px] rounded-full"/>
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-emerald-600/10 blur-[160px] rounded-full"/>
 
-      {/* Top */}
-      <div className="max-w-7xl mx-auto px-6 py-16 grid gap-12 md:grid-cols-2 lg:grid-cols-4">
-        
-        {/* Brand */}
+      {/* TOP GRID */}
+      <div className="relative max-w-7xl mx-auto px-6 py-20 grid gap-14 md:grid-cols-2 lg:grid-cols-4">
+
+        {/* BRAND */}
         <div>
-          <div className="flex items-center gap-3 mb-4">
-           {/* LOGO */}
-  <div className="h-12 w-auto flex items-center">
-    <img
-      src="/header-logooo.png"
-      alt="Company Logo"
-      className="h-12 w-auto object-contain"
-    />
-  </div>
-            <h3 className="text-xl font-semibold text-white">SAGOSERVE</h3>
+          <div className="flex items-center gap-3 mb-6">
+            <img
+              src="/header-logooo.png"
+              alt="logo"
+              className="h-12 object-contain"
+            />
+            <h3 className="text-xl font-semibold text-white">
+              SAGOSERVE
+            </h3>
           </div>
 
-          <p className="text-sm leading-relaxed">
-            Excellence in service delivery, empowering businesses with
-            innovative solutions for the modern marketplace.
+          <p className="text-sm leading-relaxed text-white/50">
+            Empowering the tapioca industry through transparent
+            marketing, quality assurance and cooperative strength.
           </p>
 
-          <div className="flex gap-3 mt-6">
-            {[Facebook, Twitter, Instagram, Linkedin].map((Icon, i) => (
-              <a
-                key={i}
-                href="#"
-                className="p-2 rounded-lg bg-white/10 hover:bg-green-600 transition"
-              >
-                <Icon size={18} />
-              </a>
-            ))}
+          {/* SOCIAL */}
+          <div className="flex gap-4 mt-6">
+            {[Facebook, Twitter, Instagram, Linkedin].map(
+              (Icon, i) => (
+                <a
+                  key={i}
+                  href="#"
+                  className="
+                    p-2 rounded-xl
+                    bg-white/5
+                    hover:bg-green-600
+                    transition-all duration-300
+                  "
+                >
+                  <Icon size={18} />
+                </a>
+              )
+            )}
           </div>
         </div>
 
-        {/* Quick Links */}
+        {/* QUICK LINKS */}
         <div>
-          <h4 className="text-white font-semibold mb-4">Quick Links</h4>
-          <ul className="space-y-2 text-sm">
-            <li>
-              <Link to="/" onClick={scrollToTop} className="hover:text-green-500">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link to="/about" onClick={scrollToTop} className="hover:text-green-500">
-                About Us
-              </Link>
-            </li>
-            <li>
-              <Link to="/services" onClick={scrollToTop} className="hover:text-green-500">
-                Services
-              </Link>
-            </li>
-            <li>
-              <Link to="/registration" onClick={scrollToTop} className="hover:text-green-500">
-                Registration
-              </Link>
-            </li>
-            <li>
-              <Link to="/contact" onClick={scrollToTop} className="hover:text-green-500">
-                Contact
-              </Link>
-            </li>
+          <h4 className="text-white font-semibold mb-6">
+            Quick Links
+          </h4>
+
+          <ul className="space-y-3 text-sm">
+            {[
+              ["Home", "/"],
+              ["About Us", "/about"],
+              ["Services", "/services"],
+              ["Registration", "/registration"],
+              ["Contact", "/contact"],
+            ].map(([name, path]) => (
+              <li key={name}>
+                <Link
+                  to={path}
+                  onClick={scrollToTop}
+                  className="
+                    hover:text-green-400
+                    transition
+                    flex items-center gap-2 group
+                  "
+                >
+                  {name}
+                  <ArrowUpRight
+                    size={14}
+                    className="opacity-0 group-hover:opacity-100"
+                  />
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
 
-        {/* Services */}
+        {/* SERVICES */}
         <div>
-          <h4 className="text-white font-semibold mb-4">Our Services</h4>
-          <ul className="space-y-2 text-sm">
+          <h4 className="text-white font-semibold mb-6">
+            Our Services
+          </h4>
+
+          <ul className="space-y-3 text-sm text-white/50">
             <li>E-Auction Solutions</li>
             <li>Member Management</li>
             <li>Laboratory Testing</li>
@@ -122,42 +139,53 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Contact */}
+        {/* CONTACT */}
         <div>
-          <h4 className="text-white font-semibold mb-4">Contact Info</h4>
-          <ul className="space-y-3 text-sm">
+          <h4 className="text-white font-semibold mb-6">
+            Contact Info
+          </h4>
+
+          <ul className="space-y-4 text-sm text-white/50">
             <li className="flex gap-3">
-              <MapPin size={18} className="text-green-500" />
+              <MapPin className="text-green-500" size={18}/>
               <span>
-                Jagirammalayam Post,<br />
-                Omalur Main Road,<br />
+                Jagirammalayam Post,<br/>
+                Omalur Main Road,<br/>
                 Salem – 636302
               </span>
             </li>
+
             <li className="flex gap-3">
-              <Phone size={18} className="text-green-500" />
+              <Phone className="text-green-500" size={18}/>
               <span>
-                +91 94899 05440<br />
+                +91 94899 05440<br/>
                 +91 94899 05441
               </span>
             </li>
+
             <li className="flex gap-3">
-              <Mail size={18} className="text-green-500" />
+              <Mail className="text-green-500" size={18}/>
               <span>slm_mdsago@yahoo.co.in</span>
             </li>
           </ul>
         </div>
       </div>
 
-      {/* Bottom */}
-      <div className="border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
-          <p>© {new Date().getFullYear()} SAGOSERVE. All rights reserved.</p>
-          <div className="flex gap-4">
-            <Link to="/privacy" onClick={scrollToTop} className="hover:text-green-500">
+      {/* BOTTOM BAR */}
+      <div className="border-t border-white/10 relative">
+        <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/40">
+          <p>
+            © {new Date().getFullYear()} SAGOSERVE.
+            All rights reserved.
+          </p>
+
+          <div className="flex gap-6">
+            <Link to="/privacy" onClick={scrollToTop}
+              className="hover:text-green-400">
               Privacy Policy
             </Link>
-            <Link to="/terms" onClick={scrollToTop} className="hover:text-green-500">
+            <Link to="/terms" onClick={scrollToTop}
+              className="hover:text-green-400">
               Terms of Service
             </Link>
           </div>
